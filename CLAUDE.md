@@ -13,10 +13,11 @@ Next.js + React (PWA) · Supabase PostgreSQL (RLS on `tenant_id`) · JSON APIs �
 
 ## Source of truth (read in this order)
 1. `docs/07_Decision_Log_and_Open_Questions.md` — what is decided vs open
-2. `docs/04_Functional_Spec_R1.md` — data model, rules, formulas, posting, roles, tests (R1)
-3. `docs/03_SRS.md` — requirement IDs (e.g. LN-012), priority, release
-4. `docs/02_BPR_and_Swimlanes.md` — 7 core processes, KPIs
-5. `docs/01_Module_and_Feature_Map.md` — 21 modules, R1/R2/R3 tags
+2. `docs/05_Worked_Examples_Starter.md` + `docs/worked_examples/starter.json` — synthetic engine test vectors (pending approval); load them in the rule tester
+3. `docs/04_Functional_Spec_R1.md` — data model, rules, formulas, posting, roles, tests (R1)
+4. `docs/03_SRS.md` — requirement IDs (e.g. LN-012), priority, release
+5. `docs/02_BPR_and_Swimlanes.md` — 7 core processes, KPIs
+6. `docs/01_Module_and_Feature_Map.md` — 21 modules, R1/R2/R3 tags
 
 If documents conflict, the Decision Log wins, then FS, then SRS. Status of every doc is v0.1 draft: nothing is owner-approved yet.
 
@@ -30,7 +31,7 @@ If documents conflict, the Decision Log wins, then FS, then SRS. Status of every
 - No stored-value wallet; payments go through licensed partners.
 
 ## Gate before building
-D2, D7, D11 and D12 are decided (23 Oct 2026); the design partner is not yet named and the PROPOSED items still need Jun's call. Absent owner-approved worked examples (loan, savings interest, dividend, patronage refund, deduction file), do not hard-code financial formulas; build the rule engine and mark examples as pending.
+D2, D7, D11 and D12 are decided (23 Oct 2026); all PROPOSED items were accepted. The design partner is referred to as Partner-A only (never named in this public repo). Absent owner-approved worked examples (loan, savings interest, dividend, patronage refund, deduction file), do not hard-code financial formulas; build the rule engine and mark examples as pending.
 
 ## Suggested first build slice (after gate)
 Tenant + auth + RLS skeleton → membership → loan product config + rule tester → loan release (amortisation) → payroll-deduction file + remittance matching → teller/EOD → GL posting → core reports. Release tags: R1 MVP, R2 repeatable, R3 scale.

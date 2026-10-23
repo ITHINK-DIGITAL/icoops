@@ -1,0 +1,527 @@
+{
+ "status": "SYNTHETIC - pending owner approval",
+ "conventions": {
+  "money": "numeric(18,2) half-up",
+  "rate": "numeric(9,6)",
+  "loan_i": "annual/12 (30/360)",
+  "schedule": "installment rounded half-up; last installment clears balance",
+  "savings": "ADB over D days, r/365, round gross then tax each half-up"
+ },
+ "vectors": [
+  {
+   "id": "LN-DIM-01",
+   "rule": "loan_interest_diminishing",
+   "kind": "normal",
+   "inputs": {
+    "principal": "100000.00",
+    "annual_rate": "0.120000",
+    "term_months": "12"
+   },
+   "expected": {
+    "installment": "8884.88",
+    "total_interest": "6618.53",
+    "last_installment": "8884.85",
+    "schedule": [
+     [
+      "1",
+      "8884.88",
+      "1000.00",
+      "7884.88",
+      "92115.12"
+     ],
+     [
+      "2",
+      "8884.88",
+      "921.15",
+      "7963.73",
+      "84151.39"
+     ],
+     [
+      "3",
+      "8884.88",
+      "841.51",
+      "8043.37",
+      "76108.02"
+     ],
+     [
+      "4",
+      "8884.88",
+      "761.08",
+      "8123.80",
+      "67984.22"
+     ],
+     [
+      "5",
+      "8884.88",
+      "679.84",
+      "8205.04",
+      "59779.18"
+     ],
+     [
+      "6",
+      "8884.88",
+      "597.79",
+      "8287.09",
+      "51492.09"
+     ],
+     [
+      "7",
+      "8884.88",
+      "514.92",
+      "8369.96",
+      "43122.13"
+     ],
+     [
+      "8",
+      "8884.88",
+      "431.22",
+      "8453.66",
+      "34668.47"
+     ],
+     [
+      "9",
+      "8884.88",
+      "346.68",
+      "8538.20",
+      "26130.27"
+     ],
+     [
+      "10",
+      "8884.88",
+      "261.30",
+      "8623.58",
+      "17506.69"
+     ],
+     [
+      "11",
+      "8884.88",
+      "175.07",
+      "8709.81",
+      "8796.88"
+     ],
+     [
+      "12",
+      "8884.85",
+      "87.97",
+      "8796.88",
+      "0.00"
+     ]
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-DIM-02",
+   "rule": "loan_interest_diminishing",
+   "kind": "boundary",
+   "inputs": {
+    "principal": "100000.00",
+    "annual_rate": "0.120000",
+    "term_months": "1"
+   },
+   "expected": {
+    "installment": "101000.00",
+    "total_interest": "1000.00"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-DIM-03",
+   "rule": "loan_interest_diminishing",
+   "kind": "exception",
+   "inputs": {
+    "principal": "12000.00",
+    "annual_rate": "0.000000",
+    "term_months": "12"
+   },
+   "expected": {
+    "installment": "1000.00",
+    "total_interest": "0.00"
+   },
+   "note": "zero-rate loan"
+  },
+  {
+   "id": "LN-FLAT-01",
+   "rule": "loan_interest_flat",
+   "kind": "normal",
+   "inputs": {
+    "principal": "50000.00",
+    "annual_rate": "0.120000",
+    "term_months": "10"
+   },
+   "expected": {
+    "total_interest": "5000.00",
+    "installment": "5500.00"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-FLAT-02",
+   "rule": "loan_interest_flat",
+   "kind": "boundary",
+   "inputs": {
+    "principal": "50000.00",
+    "annual_rate": "0.120000",
+    "term_months": "1"
+   },
+   "expected": {
+    "total_interest": "500.00",
+    "installment": "50500.00"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-FLAT-03",
+   "rule": "loan_interest_flat",
+   "kind": "exception",
+   "inputs": {
+    "principal": "10000.00",
+    "annual_rate": "0.115000",
+    "term_months": "7"
+   },
+   "expected": {
+    "total_interest": "670.83",
+    "installment": "1524.40"
+   },
+   "note": "rounding: installment does not divide evenly; last installment adjusts"
+  },
+  {
+   "id": "LN-DISC-01",
+   "rule": "loan_interest_advance",
+   "kind": "normal",
+   "inputs": {
+    "principal": "60000.00",
+    "annual_rate": "0.120000",
+    "term_months": "6"
+   },
+   "expected": {
+    "advance_interest": "3600.00",
+    "installment": "10000.00",
+    "net_before_other_deductions": "56400.00"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-REL-01",
+   "rule": "release_deductions",
+   "kind": "normal",
+   "inputs": {
+    "principal": "100000",
+    "service_fee_pct": "0.02",
+    "insurance_pct": "0.005",
+    "dst": "0.00 (placeholder)",
+    "cbu_retention_pct": "0.02",
+    "prior_loan_payoff": "10000.00"
+   },
+   "expected": {
+    "service_fee": "2000.00",
+    "insurance": "500.00",
+    "cbu_retention": "2000.00",
+    "net_proceeds": "85500.00",
+    "gl_debits": "100000",
+    "gl_credits": "100000.00"
+   },
+   "note": ""
+  },
+  {
+   "id": "SV-ADB-01",
+   "rule": "savings_interest_adb",
+   "kind": "normal",
+   "inputs": {
+    "annual_rate": "0.03",
+    "days": "30",
+    "balances": "d1-10: 10000.00; d11-20: 15000.00; d21-30: 5000.00",
+    "wht": "0.20"
+   },
+   "expected": {
+    "adb": "10000.00",
+    "gross_interest": "24.66",
+    "withholding": "4.93",
+    "net_interest": "19.73"
+   },
+   "note": ""
+  },
+  {
+   "id": "SV-MMB-01",
+   "rule": "savings_interest_min_monthly",
+   "kind": "normal",
+   "inputs": {
+    "annual_rate": "0.03",
+    "days": "30",
+    "balances": "same as SV-ADB-01",
+    "wht": "0.20"
+   },
+   "expected": {
+    "min_balance": "5000",
+    "gross_interest": "12.33",
+    "withholding": "2.47",
+    "net_interest": "9.86"
+   },
+   "note": ""
+  },
+  {
+   "id": "SV-ADB-02",
+   "rule": "savings_interest_adb",
+   "kind": "boundary",
+   "inputs": {
+    "annual_rate": "0.03",
+    "days": "30",
+    "balances": "10000.00 all days",
+    "minimum_to_earn": "10000.00",
+    "wht": "0.20"
+   },
+   "expected": {
+    "adb": "10000.00",
+    "gross_interest": "24.66",
+    "note": "ADB equals minimum: earns"
+   },
+   "note": ""
+  },
+  {
+   "id": "SV-ADB-03",
+   "rule": "savings_interest_adb",
+   "kind": "exception",
+   "inputs": {
+    "annual_rate": "0.03",
+    "days": "30",
+    "balances": "9999.99 all days",
+    "minimum_to_earn": "10000.00",
+    "wht": "0.20"
+   },
+   "expected": {
+    "gross_interest": "0.00",
+    "withholding": "0.00",
+    "net_interest": "0.00"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-PEN-01",
+   "rule": "penalty",
+   "kind": "normal",
+   "inputs": {
+    "past_due": "8884.88",
+    "monthly_rate": "0.03",
+    "grace_days": "5",
+    "days_late": "45",
+    "cap_pct_of_past_due": "0.10"
+   },
+   "expected": {
+    "days_beyond_grace": "40",
+    "uncapped": "355.40",
+    "cap": "888.49",
+    "penalty": "355.40"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-PEN-02",
+   "rule": "penalty",
+   "kind": "boundary",
+   "inputs": {
+    "past_due": "8884.88",
+    "monthly_rate": "0.03",
+    "grace_days": "5",
+    "days_late": "5",
+    "cap_pct_of_past_due": "0.10"
+   },
+   "expected": {
+    "days_beyond_grace": "0",
+    "uncapped": "0.00",
+    "cap": "888.49",
+    "penalty": "0.00"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-PEN-03",
+   "rule": "penalty",
+   "kind": "exception",
+   "inputs": {
+    "past_due": "8884.88",
+    "monthly_rate": "0.03",
+    "grace_days": "5",
+    "days_late": "400",
+    "cap_pct_of_past_due": "0.10"
+   },
+   "expected": {
+    "days_beyond_grace": "395",
+    "uncapped": "3509.53",
+    "cap": "888.49",
+    "penalty": "888.49"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-ALLOC-01",
+   "rule": "allocation_order",
+   "kind": "normal",
+   "inputs": {
+    "payment": "5000.00",
+    "penalty_due": "355.40",
+    "interest_due": "1000.00",
+    "principal_due": "7884.88",
+    "order": "penalty>interest>principal"
+   },
+   "expected": {
+    "penalty": "355.40",
+    "interest": "1000",
+    "principal": "3644.60",
+    "excess": "0.00"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-ALLOC-02",
+   "rule": "allocation_order",
+   "kind": "exception",
+   "inputs": {
+    "payment": "10000.00",
+    "penalty_due": "355.40",
+    "interest_due": "1000.00",
+    "principal_due": "7884.88"
+   },
+   "expected": {
+    "penalty": "355.40",
+    "interest": "1000",
+    "principal": "7884.88",
+    "excess": "759.72",
+    "note": "excess to savings unless member chooses advance principal"
+   },
+   "note": ""
+  },
+  {
+   "id": "LN-ALLOC-03",
+   "rule": "allocation_order",
+   "kind": "boundary",
+   "inputs": {
+    "payment": "300.00",
+    "penalty_due": "355.40",
+    "interest_due": "1000.00",
+    "principal_due": "7884.88"
+   },
+   "expected": {
+    "penalty": "300",
+    "interest": "0",
+    "principal": "0",
+    "excess": "0"
+   },
+   "note": ""
+  },
+  {
+   "id": "PD-REM-01",
+   "rule": "remittance_allocation",
+   "kind": "normal",
+   "inputs": {
+    "expected": "loan 3000.00; cbu 500.00; savings 500.00",
+    "received": "4000.00",
+    "order": "loan>cbu>savings"
+   },
+   "expected": {
+    "loan": "3000",
+    "cbu": "500",
+    "savings": "500",
+    "shortfall": "0",
+    "excess": "0"
+   },
+   "note": ""
+  },
+  {
+   "id": "PD-REM-02",
+   "rule": "remittance_allocation",
+   "kind": "boundary",
+   "inputs": {
+    "expected": "same",
+    "received": "3200.00",
+    "order": "loan>cbu>savings"
+   },
+   "expected": {
+    "loan": "3000",
+    "cbu": "200",
+    "savings": "0",
+    "shortfall": "800",
+    "excess": "0"
+   },
+   "note": ""
+  },
+  {
+   "id": "PD-REM-03",
+   "rule": "remittance_allocation",
+   "kind": "exception",
+   "inputs": {
+    "expected": "same",
+    "received": "0.00 (zero-pay)"
+   },
+   "expected": {
+    "loan": "0",
+    "cbu": "0",
+    "savings": "0",
+    "shortfall": "4000",
+    "excess": "0"
+   },
+   "note": ""
+  },
+  {
+   "id": "PD-REM-04",
+   "rule": "remittance_allocation",
+   "kind": "exception",
+   "inputs": {
+    "expected": "same",
+    "received": "4150.00 (excess)"
+   },
+   "expected": {
+    "loan": "3000",
+    "cbu": "500",
+    "savings": "500",
+    "shortfall": "0",
+    "excess": "150"
+   },
+   "note": ""
+  },
+  {
+   "id": "PD-NTHP-01",
+   "rule": "take_home_pay_floor",
+   "kind": "normal",
+   "inputs": {
+    "take_home_before": "14000.0",
+    "new_amortization": "8884.88",
+    "floor": "5000.00"
+   },
+   "expected": {
+    "take_home_after": "5115.12",
+    "result": "pass"
+   },
+   "note": ""
+  },
+  {
+   "id": "PD-NTHP-02",
+   "rule": "take_home_pay_floor",
+   "kind": "boundary",
+   "inputs": {
+    "take_home_before": "14000.0",
+    "new_amortization": "9000.00",
+    "floor": "5000.00"
+   },
+   "expected": {
+    "take_home_after": "5000.00",
+    "result": "pass"
+   },
+   "note": ""
+  },
+  {
+   "id": "PD-NTHP-03",
+   "rule": "take_home_pay_floor",
+   "kind": "exception",
+   "inputs": {
+    "take_home_before": "14000.0",
+    "new_amortization": "9000.01",
+    "floor": "5000.00"
+   },
+   "expected": {
+    "take_home_after": "4999.99",
+    "result": "fail"
+   },
+   "note": ""
+  }
+ ]
+}
