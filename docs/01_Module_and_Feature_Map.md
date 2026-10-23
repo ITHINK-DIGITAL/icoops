@@ -228,7 +228,7 @@ Profile packs are how one codebase serves very different co-ops: each pack is co
 
 | Pack                   | Adds                                                                                                        | First likely buyer                  |
 |------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------|
-| PNP / PSMB             | Rank, badge/serial, unit, assignment fields; PNP payroll deduction format; unit-level structure and reports | PSMB co-op group                    |
+| PNP / PSMB             | Rank, badge/serial, unit, assignment fields; PNP payroll deduction format; unit-level structure and reports | Police and uniformed-service co-op groups                    |
 | DepEd teachers         | Division/school fields; APDS deduction file and service-fee handling; NTHP check                            | Teacher and DepEd employee co-ops   |
 | LGU and GOCC employees | Office/department fields; LGU payroll formats                                                               | Provincial and city employee co-ops |
 | Corporate employee     | Employer HR file formats, payroll cut-offs, separation clearance                                            | Company employee co-ops             |
