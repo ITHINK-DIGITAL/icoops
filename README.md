@@ -20,6 +20,7 @@ Multi-tenant cooperative management SaaS for Philippine cooperatives, by iThink 
 | [docs/03_SRS.md](docs/03_SRS.md) | Software requirements for all modules and releases |
 | [docs/04_Functional_Spec_R1.md](docs/04_Functional_Spec_R1.md) | R1 architecture, data model, rules, formulas, tests |
 | [docs/05_Worked_Examples_Starter.md](docs/05_Worked_Examples_Starter.md) | Synthetic reference vectors for the calculation engine (pending approval) |
+| [docs/08_Configurability_and_Library_Standard.md](docs/08_Configurability_and_Library_Standard.md) | Rule tiers, parameter-based library contract, parameter inventory |
 | [docs/07_Decision_Log_and_Open_Questions.md](docs/07_Decision_Log_and_Open_Questions.md) | Decisions made and still open |
 
 ## Demo

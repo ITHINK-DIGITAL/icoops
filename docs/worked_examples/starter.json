@@ -548,5 +548,16 @@
    "note": "",
    "segment": "S2"
   }
- ]
+ ],
+ "parameter_defaults": {
+  "rounding_mode": "half_up",
+  "money_precision": 2,
+  "rate_precision": 6,
+  "installment_rounding": "half_up",
+  "last_installment_adjust": true,
+  "rounding_order": "round_gross_then_tax",
+  "loan_day_count": "30/360",
+  "savings_day_count_basis": 365,
+  "penalty_day_divisor": 30
+ }
 }

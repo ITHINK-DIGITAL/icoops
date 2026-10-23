@@ -53,6 +53,8 @@ About 30 core tables carry R1; every one has tenant_id under row-level security,
 
 ## Configuration Studio
 
+**Standard:** all rules follow `docs/08_Configurability_and_Library_Standard.md` (tiers T0 to T3, parameter precedence, parameter-based libraries). The rule types below are the starting inventory; the full parameter list, including calculation conventions, capital, membership, status guards, security and follow-up parameters, is in docs/08 section 5. Fixed numbers quoted elsewhere in this spec (365, 30, 15 minutes, 10%) are defaults.
+
 Every rate, method and limit is a versioned rule tested against worked examples before activation — this is the mechanism that stops per-client code.
 
 **Rule types and parameters (R1)**
@@ -104,7 +106,7 @@ Key rules:
 
 - Employment fields (payroll office, employee no.) are required for payroll-deduction members; a change of payroll office moves all active deduction items to the new office from the next cycle.
 
-- Share capital: paid-up must reach the by-law minimum within the configured months; holdings above the cap (CDA rule, typically 10% of total paid-up) are blocked.
+- Share capital: paid-up must reach the by-law minimum within the configured months; holdings above the cap (maximum holding % parameter; CDA rule, typically 10% of total paid-up) are blocked.
 
 - Capital refund on exit = paid-up capital − outstanding obligations offset, paid after lock-in and, above a threshold, Board approval.
 
@@ -118,7 +120,7 @@ Average daily balance (ADB) method, for a posting period of D days:
 
 \text{ADB} = \frac{1}{D}\sum\_{d=1}^{D} \text{EndOfDayBalance}\_d
 
-\text{Interest} = \text{ADB} \times \frac{r}{365} \times D, \qquad \text{Net interest} = \text{Interest} - \text{Interest} \times t\_{wh}
+\text{Interest} = \text{ADB} \times \frac{r}{B} \times D (B = day-count basis parameter, default 365), \qquad \text{Net interest} = \text{Interest} - \text{Interest} \times t\_{wh}
 
 where r is the annual rate in force and t_wh the withholding tax rate from the product rule. Minimum monthly balance method replaces ADB with the lowest end-of-day balance in the period.
 
@@ -168,7 +170,7 @@ Net proceeds at release:
 
 \text{Net proceeds} = P - \text{service fee} - \text{insurance} - \text{DST} - \text{CBU retention} - \text{prior-loan payoff} - \text{advance interest}
 
-Penalty on a past-due installment, for days late beyond grace: past-due amount × monthly penalty rate × days late ÷ 30, capped per product. DST and insurance follow the product rule; the cooperative's tax exemption status must be confirmed with its tax adviser.
+Penalty on a past-due installment, for days late beyond grace: past-due amount × monthly penalty rate × days late ÷ penalty day divisor (default 30), capped per product. DST and insurance follow the product rule; the cooperative's tax exemption status must be confirmed with its tax adviser.
 
 **Payment allocation (default order, configurable):** penalties → interest due → principal due → advance principal. Overpayment beyond the loan goes to the member's savings unless the member chooses advance payment.
 
@@ -275,7 +277,7 @@ Key: C = create/edit · A = approve · V = view · — = no access
 | Audit log                       | —           | —               | —             | —           | —          | V          | V                  | V                   | V       | V            |
 | Reports and dashboard           | Own         | Own             | Own           | Own         | V          | V          | V                  | V                   | V       | —            |
 
-Session timeout 15 minutes idle; 5 failed logins lock the account; OTP required for approvals and for any login from a new device.
+Defaults: session timeout 15 minutes idle; 5 failed logins lock the account; OTP required for approvals and for any login from a new device. These are security-policy parameters, tenant-adjustable only within platform limits.
 
 ## R1 reports and compliance outputs
 

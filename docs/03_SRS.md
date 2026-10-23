@@ -39,11 +39,16 @@ The platform requirements make every tenant isolated, configurable and auditable
 | PL-015 | The system shall generate member, account, OR and voucher numbers from tenant-defined patterns without gaps. | Must | R1 |
 | PL-016 | The system shall install the Government (PNP-PSMB, DepEd, LGU), Corporate and Federation profile packs as configuration bundles. | Should | R2 |
 | PL-017 | The system shall provide the Private profile pack for the first design partner: payroll deduction OFF, teller and direct-pay collection, loan follow-up. | Must | R1 |
+| PL-018 | The system shall hold every business rule and rate as a typed, versioned, effective-dated parameter set validated against a schema, with no business constant in application code (see docs/08). | Must | R1 |
+| PL-019 | The system shall run every calculation through parameter-based libraries that take input and parameters explicitly and record library version and rule-version ID with each result. | Must | R1 |
 | PL-020 | The system shall authenticate staff by email or mobile with password and OTP-based 2FA. | Must | R1 |
 | PL-021 | The system shall enforce role-based permissions per module, action and amount limit. | Must | R1 |
 | PL-022 | The system shall require a second user (maker-checker) to approve money movements, reversals, back-dating and rate changes. | Must | R1 |
 | PL-023 | The system shall log every create, update, approve and view of sensitive records with user, time, before and after values. | Must | R1 |
 | PL-024 | The system shall capture data-privacy consent and support access, correction and erasure requests within legal retention limits. | Must | R1 |
+| PL-025 | The system shall resolve parameters by precedence: platform default, profile pack, tenant, product, then member or account override, most specific wins. | Must | R1 |
+| PL-026 | The system shall show an impact preview on sample live accounts before a rule version is activated. | Should | R1 |
+| PL-027 | The system shall support restricted, side-effect-free expression rules for conditions and formulas, version-controlled and tested against worked examples. | Should | R2 |
 | PL-030 | The system shall import members, accounts and transactions from validated CSV/Excel templates with error reports. | Must | R1 |
 | PL-031 | The system shall expose JSON APIs and webhooks for core entities and events. | Should | R2 |
 | PL-040 | The system shall send SMS, email and in-app notifications from bilingual tenant templates on configured triggers. | Must | R1 |
@@ -229,6 +234,7 @@ The non-functional targets are sized for 40 tenants and 200,000 members by end o
 | NF-015 | Localization | Language and formats | English with Filipino member messages; PHP currency; Asia/Manila time |
 | NF-016 | Compatibility | Clients | Latest two versions of Chrome, Edge, Safari; Android 10+ PWA |
 | NF-017 | Connectivity | Low-bandwidth branches | Core screens usable at 1 Mbps |
+| NF-019 | Configurability | Business rules and libraries | Per docs/08: tiers T0 to T3; libraries pure and parameter-based; CI blocks business literals in calculation code |
 | NF-018 | Observability | Monitoring | Error tracking, job monitoring and per-tenant usage metrics |
 
 ## Integration and data requirements

@@ -4,7 +4,9 @@
 
 Machine-readable copy: [worked_examples/starter.json](worked_examples/starter.json). The rule tester (PL-012) should load it and fail the build on any mismatch.
 
-## Conventions assumed (confirm or change)
+## Conventions assumed (parameter defaults, per docs/08)
+
+C1 to C8 are default values of configurable parameters, not fixed rules. Each tenant can set a different rounding mode, installment rounding, last-installment adjustment, rounding order, day-count basis or penalty divisor. The vectors below use the defaults; alternative parameter values need their own vectors.
 
 | # | Convention | Why it matters |
 |---|---|---|

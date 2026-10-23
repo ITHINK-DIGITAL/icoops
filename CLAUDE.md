@@ -13,6 +13,7 @@ Next.js + React (PWA) · Supabase PostgreSQL (RLS on `tenant_id`) · JSON APIs �
 
 ## Source of truth (read in this order)
 1. `docs/07_Decision_Log_and_Open_Questions.md` — what is decided vs open
+   (also read `docs/08_Configurability_and_Library_Standard.md` before writing any calculation or rule code)
 2. `docs/05_Worked_Examples_Starter.md` + `docs/worked_examples/starter.json` — synthetic engine test vectors (pending approval); load them in the rule tester
 3. `docs/04_Functional_Spec_R1.md` — data model, rules, formulas, posting, roles, tests (R1)
 4. `docs/03_SRS.md` — requirement IDs (e.g. LN-012), priority, release
@@ -22,6 +23,7 @@ Next.js + React (PWA) · Supabase PostgreSQL (RLS on `tenant_id`) · JSON APIs �
 If documents conflict, the Decision Log wins, then FS, then SRS. Status of every doc is v0.1 draft: nothing is owner-approved yet.
 
 ## Non-negotiable engineering rules
+- Configurability standard (`docs/08_Configurability_and_Library_Standard.md`): every calculation library is a pure, parameter-based function; no business constant, tenant name or segment branch in calculation code; every business rule is a typed, versioned, effective-dated parameter set (tiers T0 to T3) tested against worked examples before activation.
 - No client-specific code. Differences live in tenant configuration or profile packs (PNP-PSMB, DepEd, LGU, corporate).
 - Every table has `tenant_id` and row-level security; automated cross-tenant access tests run in CI.
 - Money: `numeric(18,2)`, rates `numeric(9,6)`, decimal arithmetic only, 2-dp half-up unless a product rule says otherwise. No floats.
