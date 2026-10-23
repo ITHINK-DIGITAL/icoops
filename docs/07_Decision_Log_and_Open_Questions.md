@@ -51,3 +51,20 @@ iCOOPs follows the same stack and DevOps pattern as iLogistics, Malasakit, GAD a
 - App: Next.js + React; JSON APIs; Python where necessary (e.g., batch jobs, computations, reports)
 
 Status: build NOT started. Next step = revisit iCOOPs design / BPR / SRS / FS in a separate session before any repo, Supabase project or Vercel project is created.
+
+## E. Partner segments (DECIDED by Jun, 23 Oct 2026, part of D14)
+
+A partner segment is the customer category a cooperative falls into. It fixes how the co-op collects repayments, how its tenant is shaped and which profile pack it starts from. It is not a customer name and not the same thing as a profile pack.
+
+| Segment | Members | Tenant shape | Payroll deduction | Starting profile pack |
+|---|---|---|---|---|
+| S1 Private | Employees of a private company, or an open community | One tenant per co-op on the shared platform | Normally OFF (teller, direct pay, later digital payments) | Private |
+| S2 LGU / government | Government employees (e.g. DepEd, PNP, LGU offices) | One tenant, several payroll offices and units | ON | Government |
+| S3 Federation | Member co-ops of a federation | Parent tenant plus child co-op tenants, consolidated reporting | Set per member co-op | Federation, on top of the member's own pack |
+
+Rules:
+1. The collection channel decides the segment, not the employer type. A private co-op that does collect by payroll deduction stays S1 with the payroll-deduction flag ON; that is configuration, not a new segment.
+2. A segment never changes the code; it changes only the profile pack, feature flags and tenant hierarchy.
+3. Placing a prospect: who deducts from salary, if anyone; one tenant or a group of co-ops; where the member pays.
+
+Open: Partner-A's segment (decides R1 scope); federation hierarchy design.
