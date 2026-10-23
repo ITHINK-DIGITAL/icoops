@@ -30,7 +30,7 @@ If documents conflict, the Decision Log wins, then FS, then SRS. Status of every
 - No stored-value wallet; payments go through licensed partners.
 
 ## Gate before building
-Open decisions D2, D7, D11, D12 and the PROPOSED items need Jun's call. Absent owner-approved worked examples (loan, savings interest, dividend, patronage refund, deduction file), do not hard-code financial formulas; build the rule engine and mark examples as pending.
+D2, D7, D11 and D12 are decided (23 Oct 2026); the design partner is not yet named and the PROPOSED items still need Jun's call. Absent owner-approved worked examples (loan, savings interest, dividend, patronage refund, deduction file), do not hard-code financial formulas; build the rule engine and mark examples as pending.
 
 ## Suggested first build slice (after gate)
 Tenant + auth + RLS skeleton → membership → loan product config + rule tester → loan release (amortisation) → payroll-deduction file + remittance matching → teller/EOD → GL posting → core reports. Release tags: R1 MVP, R2 repeatable, R3 scale.
