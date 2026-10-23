@@ -1,6 +1,6 @@
 # PARTNER-S1 Input Request and Working Assumptions (v0.1)
 
-Status: PROPOSED by Claude, adopted by Jun on 23 Oct 2026 (Jun deferred to the expert recommendation; decision D17 in docs/07). Every assumption below is a parameter default, not a rule. PARTNER-S1's real data replaces it through configuration, never through code.
+Status: ADOPTED by Jun on 23 Oct 2026 (D17, D18). There is no signed partner, so this table is the validation checklist for the first S1 customer; the standard answers are in docs/10. Every assumption below is a parameter default, not a rule. PARTNER-S1's real data replaces it through configuration, never through code.
 
 ## 1. Conventions C3, C4, C5 (recommended defaults)
 
@@ -38,3 +38,12 @@ Ask PARTNER-S1 for three real loan ledgers and one month of savings interest pos
 ## 4. Build-gate note
 
 Items 1 to 3 gate the loan and savings engines. They do not gate the tenant, authentication, row-level-security and rule-engine skeleton, which depend on no partner figures. Starting that skeleton requires Jun's confirmation that the design review is done (CLAUDE.md gate).
+
+## 5. Risk of building without a design partner (D18) and mitigations
+
+| Risk | Mitigation |
+|---|---|
+| Financial rules never validated by a real co-op before first customer | Independent accountant recomputes every vector (docs/05 approval table); one hour of review by a practising co-op treasurer from Jun's network |
+| Standard differs from how a real co-op works | All values are parameters; first customer's three ledgers become vectors in week one of onboarding |
+| Regulatory misreads (tax, CDA, lending disclosure) | Mark every such value CONFIRM; tax and CDA positions confirmed by an adviser before the first go-live |
+| No parallel-run partner for acceptance | Keep the one-month parallel run as a condition of the first customer contract |

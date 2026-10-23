@@ -176,6 +176,8 @@ Penalty on a past-due installment, for days late beyond grace: past-due amount �
 
 **Dues schedule and follow-up (S1, R1).** With payroll deduction off, each loan's installments form a dues schedule per member. The system sends reminders before the due date, lists overdue installments by aging bucket, and queues follow-up tasks for the collections officer, who records contacts and promises to pay against the loan. Payments arrive through the teller or as recorded direct payments (bank deposit or transfer reference matched to the member's dues) and are allocated in the configured order.
 
+**Loan disclosure statement (LN-019).** At release the system prints and stores a statement with principal, finance charges, each deduction, net proceeds, the installment amount and the effective interest rate, computed by the same loan library from the schedule. The member signs a copy.
+
 Screens: Loan calculator · Application · Eligibility result · Evaluation · Approval queue · Release (computation preview, voucher) · Loan inquiry and schedule · Payment posting · Renewal / restructure · Aging report.
 
 ## Payroll deduction
@@ -327,11 +329,12 @@ R1 is accepted when these scenarios pass at the design partner on synthetic or a
 | AT-13 | Tenant isolation                                                                            | A user of tenant A cannot read or write any row of tenant B through UI or API             | PL-001, NF-007             |
 | AT-14 | Maker-checker                                                                               | Creator of a withdrawal above limit cannot approve it                                     | PL-022                     |
 | AT-15 (S1) | Loan installment goes overdue with payroll deduction OFF | Reminder sent before due date; installment listed in the overdue queue; follow-up task created; contact and promise to pay recorded | LN-017, LN-018 |
+| AT-17 (S1) | Release a loan and print the disclosure statement | Statement shows finance charges and effective interest rate equal to the worked example; copy stored with the loan | LN-019 |
 | AT-16 (S1) | Member pays by bank deposit with a reference | Payment matched to the member's dues; allocated penalty, interest, principal; receipt issued | PD-012, LN-010 |
 
-## Open items for the design partner
+## Validation checklist for the first S1 customer
 
-These inputs decide whether the R1 build can start; none can be guessed safely.
+No design partner is signed (D18). The R1 build proceeds on the standard S1 profile in docs/10; these inputs validate or correct its parameter values during onboarding and the parallel run.
 
 - [ ] (S2 only) Sample deduction files and remittance reports for each payroll office (de-identified)
 - [ ] (S1) How members pay today (teller, bank deposit, other), the follow-up routine for overdue loans and loan-loss history

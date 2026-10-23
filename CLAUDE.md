@@ -3,7 +3,7 @@
 Read this first in every session. The repo is the handoff: everything needed to continue is here or linked from here.
 
 ## What this is
-iCOOPs: greenfield multi-tenant SaaS for Philippine cooperatives (iThink Digital). Segment S1 (private co-ops, payroll deduction OFF) first, with PARTNER-S1 as design partner; payroll deduction (S2, government) in R2; federation (S3) in R3. One codebase, all tenants on the shared multi-tenant platform (D14, D15). Product owner: Jun Mercader.
+iCOOPs: greenfield multi-tenant SaaS for Philippine cooperatives (iThink Digital). Segment S1 (private co-ops, payroll deduction OFF) first, built to the standard S1 profile in docs/10 (label PARTNER-S1; no design partner is signed, D18); payroll deduction (S2, government) in R2; federation (S3) in R3. One codebase, all tenants on the shared multi-tenant platform (D14, D15). Product owner: Jun Mercader.
 
 ## Status (23 Oct 2026)
 Design phase. **No app code, Supabase project or Vercel project exists yet.** Do not scaffold until Jun confirms the design review is done (see "Gate" below).
@@ -33,7 +33,7 @@ If documents conflict, the Decision Log wins, then FS, then SRS. Status of every
 - No stored-value wallet; payments go through licensed partners.
 
 ## Gate before building
-D2, D7, D11 and D12 are decided (23 Oct 2026); all PROPOSED items were accepted. The design partner is referred to as PARTNER-S1 only (never named in this public repo). Absent owner-approved worked examples (loan, savings interest, dividend, patronage refund, deduction file), do not hard-code financial formulas; build the rule engine and mark examples as pending.
+D2, D7, D11 and D12 are decided (23 Oct 2026); all PROPOSED items were accepted. The design partner is referred to as PARTNER-S1 only (never named in this public repo). Jun approved the standard S1 profile (docs/10), conventions C1 to C8 and the synthetic worked examples as owner on 23 Oct 2026 (D18), so the engine may implement those formulas as parameter defaults. Dividend, patronage refund and deduction-file examples are not yet approved: do not hard-code those. The first paying S1 customer validates the standard in a parallel run. Scaffolding still waits for Jun's explicit go.
 
 ## Suggested first build slice (after gate)
 Tenant + auth + RLS skeleton → membership → loan product config + rule tester → loan release (amortisation, dues schedule) → teller/EOD and direct payments → loan follow-up and aging → GL posting → core reports. Payroll-deduction file and remittance matching come in R2 behind the `payroll_deduction` flag. Release tags: R1 MVP, R2 repeatable, R3 scale.

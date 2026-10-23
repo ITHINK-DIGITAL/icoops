@@ -141,6 +141,6 @@ Take-home before the new amortization 14,000.00; floor 5,000.00 (placeholder).
 
 | Item | Owner | Status |
 |---|---|---|
-| Conventions C1–C8 | Jun / PARTNER-S1 finance | C3–C5 defaults adopted (D17); PARTNER-S1 confirmation pending |
-| Vector inputs replaced with PARTNER-S1 parameters | PARTNER-S1 | Pending |
-| Vectors independently recomputed (spreadsheet or PARTNER-S1 accountant) | PARTNER-S1 | Pending |
+| Conventions C1–C8 | Jun / PARTNER-S1 finance | Approved by Jun as owner (D17, D18); first S1 customer validates in parallel run |
+| Vector inputs replaced with the first S1 customer's parameters | First S1 customer | Pending |
+| Vectors independently recomputed (spreadsheet or PARTNER-S1 accountant) | independent accountant or first S1 customer | Pending |

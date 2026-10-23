@@ -107,6 +107,7 @@ Savings and loans carry most of the money; every computation here must match own
 | LN-013 | The system shall age the portfolio, tag past-due loans and compute allowance for probable losses. | Must | R1 |
 | LN-017 | The system shall list each member's upcoming and overdue amortizations as a dues schedule, send due-date reminders and queue follow-up tasks for overdue installments. | Must | R1 |
 | LN-018 | The system shall let a collections officer record follow-up contacts, promises to pay and outcomes against past-due loans. | Must | R1 |
+| LN-019 | The system shall print a disclosure statement at loan release showing principal, finance charges, deductions, net proceeds and the effective interest rate, and store a copy with the loan. | Must | R1 |
 | LN-014 | The system shall generate demand letters by aging bucket. | Should | R2 |
 | LN-015 | The system shall maintain a collateral register and release collateral on full payment. | Should | R2 |
 | LN-016 | The system shall process write-off with Board approval and track recoveries. | Should | R2 |
@@ -262,9 +263,9 @@ Data requirements:
 
 ## Assumptions, constraints and open items
 
-These items must be settled with the design partner before the R1 build starts.
+These items are validation points for the first S1 customer; the R1 build proceeds on the defaults in docs/10 (D18).
 
-- **Assumption:** the design partner (PARTNER-S1) is a private cooperative (segment S1) with payroll deduction off and 1,000–20,000 members.
+- **Assumption:** no design partner is signed (D18). The standard S1 profile (docs/10, label PARTNER-S1) is a private cooperative (segment S1) with payroll deduction off and 1,000–20,000 members. The first paying S1 customer validates it.
 - **Assumption:** members accept PWA rather than native apps.
 - **Constraint:** iThink standard stack — Next.js, Supabase PostgreSQL, Vercel, GitHub; Python only for batch and computation jobs.
 - **Constraint:** no client-specific code; differences go into configuration or profile packs.

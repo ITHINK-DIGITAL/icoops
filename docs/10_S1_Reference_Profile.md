@@ -1,6 +1,6 @@
 # S1 Reference Profile (expert answers to the docs/09 section 2 table) v0.1
 
-Status: PROPOSED by Claude from experience with Philippine cooperatives, requested by Jun on 23 Oct 2026. These are **reference answers, not PARTNER-S1 facts**. They let the Functional Spec, the rule tester and the demo be completed now. Every value is a synthetic, illustrative parameter default; PARTNER-S1's real policy replaces it through configuration. Regulatory and tax items are marked CONFIRM and must not be treated as legal advice.
+Status: ADOPTED by Jun on 23 Oct 2026 as the standard S1 profile (D18: no design partner yet, so this is the product standard until a real customer validates it). Written by Claude from experience with Philippine cooperatives. These are **standard reference values, not a named customer's facts**. They let the Functional Spec, the rule tester and the demo be completed now. Every value is a synthetic, illustrative parameter default; PARTNER-S1's real policy replaces it through configuration. Regulatory and tax items are marked CONFIRM and must not be treated as legal advice.
 
 ## 1. Answers by open item
 
@@ -21,7 +21,7 @@ Status: PROPOSED by Claude from experience with Philippine cooperatives, request
 
 | Recommendation | Why | Proposed handling |
 |---|---|---|
-| Disclosure statement at loan release showing principal, finance charges, net proceeds and effective interest rate | The Truth in Lending Act (RA 3765) requires borrowers to be told finance charges and the effective rate; matters most if a tenant uses flat or add-on pricing (effective rate is far above the quoted rate). Reduces complaint exposure under the financial-consumer rules | Add as a new requirement (proposed LN-019, R1, Must) after Jun approves |
+| Disclosure statement at loan release showing principal, finance charges, net proceeds and effective interest rate | The Truth in Lending Act (RA 3765) requires borrowers to be told finance charges and the effective rate; matters most if a tenant uses flat or add-on pricing (effective rate is far above the quoted rate). Reduces complaint exposure under the financial-consumer rules | Approved by Jun: LN-019, R1, Must (added to SRS and FS, test AT-17) |
 | Reference products use diminishing balance only | Easier to explain and defend; flat rates hide the true cost | Keep flat/add-on as a selectable strategy |
 | Reference penalty 2.0% per month with a cap | Excessive penalty rates get reduced by courts and attract complaints | Note: the synthetic vectors in docs/05 use 3.0% as a test value; the reference product uses 2.0% |
 | Sequence the build on items 1 to 3 | Loan and savings engines are the core of R1 and the only items that block coding | See docs/09 section 4 |
@@ -29,5 +29,5 @@ Status: PROPOSED by Claude from experience with Philippine cooperatives, request
 ## 3. How to use this profile
 
 1. Load the reference products into the rule tester and the demo as the sandbox tenant (synthetic data only).
-2. Send PARTNER-S1 the docs/09 table. Each reference answer becomes a "confirm or correct" question, which is faster for them than a blank form.
+2. With the first S1 customer, use the docs/09 table as a confirm-or-correct checklist; this is faster for them than a blank form.
 3. When PARTNER-S1 replies, create a new rule version per product. Nothing in code changes.
