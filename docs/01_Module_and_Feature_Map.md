@@ -199,7 +199,7 @@ Members get one installable web app (PWA) instead of native apps; money moves on
 |                              | Pay-out                   | Loan proceeds and refunds to bank or e-wallet                                        |
 |                              | Auto-posting              | Gateway callbacks post to the member's accounts and GL                               |
 |                              | Settlement reconciliation | Gateway settlement vs posted payments                                                |
-|                              | Member+ extras (later)    | Marketplace, rewards, community features from the EZ-COOPS lineage                   |
+|                              | Member+ extras (later)    | Marketplace, rewards, community features from the earlier EZ-COOPS branding (now iCOOPs)                   |
 
 ## Governance, analytics and AI
 

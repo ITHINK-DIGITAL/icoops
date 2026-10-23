@@ -9,10 +9,10 @@ Created 18 Oct 2026 at handoff install. Status values: OPEN · PROPOSED (Claude)
 | # | Decision | Options seen in sources | Claude recommendation | Status |
 |---|---|---|---|---|
 | D1 | Is the rebuild greenfield SaaS or a port of existing code? | No repo found; 2024 proposal implies an existing MMIS somewhere | Greenfield SaaS; legacy only as data-migration source | DECIDED (Jun, 18 Oct 2026): greenfield SaaS rebuild |
-| D2 | Product line: one platform vs iCOOPs + EZ-COOPS separate | iCOOPs (back-office) vs EZ-COOPS (member fintech/community) | One multi-tenant core, two editions/feature tiers | DECIDED (Jun, 23 Oct 2026): one codebase, one multi-tenant platform; editions and member extras via feature flags; R1 is iCOOPs back-office only |
+| D2 | Product line: one platform vs separate products (EZ-COOPS was earlier branding, now iCOOPs) | back-office vs member fintech/community | One multi-tenant core, two editions/feature tiers | DECIDED (Jun, 23 Oct 2026): one product, iCOOPs (EZ-COOPS is retired branding); one codebase, multi-tenant; member extras via feature flags; R1 is back-office only |
 | D3 | Controlling functional baseline | DRV-017 vs DRV-018 (2025) | DRV-018 annotated, with PSMB/PNP fields moved to a configurable customer profile | PROPOSED |
 | D4 | Front end | Blazor or React (PWA) | Decide with stack D5; React/Next.js PWA if aligning with Claude-first dev and shared SaaS DevOps across iLogistics/Malasakit | DECIDED (Jun, 18 Oct 2026): Next.js + React |
-| D5 | Back end & DB | .NET Core + SQL Server (2025); ASP.NET/C# + SQL Server + SSRS (2024); AWS EC2/RDS (EZ-COOPS) | Decide on team skill + licence cost per tenant; Postgres removes SQL Server licence drag in SaaS economics | DECIDED (Jun, 18 Oct 2026): Supabase PostgreSQL; JSON APIs; Python where necessary |
+| D5 | Back end & DB | .NET Core + SQL Server (2025); ASP.NET/C# + SQL Server + SSRS (2024); AWS EC2/RDS (earlier EZ-COOPS build) | Decide on team skill + licence cost per tenant; Postgres removes SQL Server licence drag in SaaS economics | DECIDED (Jun, 18 Oct 2026): Supabase PostgreSQL; JSON APIs; Python where necessary |
 | D6 | Tenancy model | "Multi-coop/unit structure… multi-tenant" (PSMB note) | Shared app, tenant_id + row-level security; dedicated DB option for large/gov tenants | PROPOSED |
 | D7 | Accounting/GL | Separate ERP, integrate | Ship a minimal coop subledger→GL posting engine in core; integrate to full ERP optional (coops need CDA FS out of the box) | DECIDED (Jun, 23 Oct 2026): minimal subledger-to-GL posting engine in core; external ERP export in R2 |
 | D8 | E-wallet | Internal wallet (2025 design) vs gateway integration | Gateway/partner integration only (GCash/Maya/banks); avoid stored-value wallet (BSP EMI licensing) | PROPOSED |
@@ -34,7 +34,7 @@ Created 18 Oct 2026 at handoff install. Status values: OPEN · PROPOSED (Claude)
 
 1. Do you have any surviving source code, database backups or schema for the legacy iCOOPs/MMIS? Where?
 2. Which cooperative is the first target (and is there budget/LOI)?
-3. Are iCOOPs and EZ-COOPS one product family going forward?
+3. ~~Are iCOOPs and EZ-COOPS one product family?~~ — ANSWERED 23 Oct 2026: EZ-COOPS was branding; now iCOOPs.
 4. Who is the product owner and technical lead on the iThink side (you, your son, a dev team)?
 5. ~~Preferred build approach~~ — ANSWERED 18 Oct 2026: iThink standard SaaS stack (see section D).
 6. Any CDA/BIR/AMLA report formats or worked financial examples (loan amortization, dividend/patronage) from a real coop to use as acceptance tests?
