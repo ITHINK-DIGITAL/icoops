@@ -49,6 +49,8 @@ Fourteen actors take part in the to-be processes; roles map to permission sets i
 
 ## BPR summary
 
+Segment applicability: P3 (payroll deduction cycle) applies to segment S2 and is released in R2. For segment S1, monthly collection runs through P4 (teller and direct payments) plus loan follow-up.
+
 Across all seven processes the redesign removes re-keying and spreadsheet reconciliation; targets are proposals to baseline with the design partner.
 
 | \#  | Process                         | As-is (typical)                                                                                                | To-be redesign                                                                                                                                                | Target                                                              |

@@ -10,13 +10,23 @@ iCOOPs solution architecture · 4 layers
 
 All tenants share one codebase and one Supabase project; isolation is enforced in the database by row-level security on tenant_id, so an application bug cannot leak another co-op's data. Large or government tenants can get a dedicated Supabase project with the same code (R2).
 
+## Segments and feature flags
+
+Every tenant has a segment that sets its default profile pack and flags; no code differs between segments (D14).
+
+| Segment | Payroll deduction flag | Tenant shape | R1 status |
+|---|---|---|---|
+| S1 Private | OFF (may be switched ON per tenant) | One tenant per co-op | Built in R1 (PARTNER-S1) |
+| S2 LGU / government | ON | One tenant, several payroll offices | Payroll deduction released in R2 |
+| S3 Federation | Per member co-op | Parent tenant plus child tenants (tenant.parent_tenant_id) | Schema in R1, features in R3 |
+
 ## Core data model
 
 About 30 core tables carry R1; every one has tenant_id under row-level security, and money never changes without a transaction row and a journal entry.
 
 | Area          | Entity (table)                                  | Key fields                                                                                                                                          | Notes                                    |
 |---------------|-------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
-| Platform      | tenant                                          | id, name, cda_reg_no, fiscal_year_start, plan, status                                                                                               | One row per cooperative                  |
+| Platform      | tenant                                          | id, name, cda_reg_no, fiscal_year_start, plan, status, segment, parent_tenant_id, features (JSON flags)                                                                                               | One row per cooperative                  |
 |               | branch_unit                                     | id, tenant_id, code, name, parent_id                                                                                                                | Branches or PNP units                    |
 |               | app_user, role, user_role                       | user, roles, approval limits                                                                                                                        | Staff accounts                           |
 |               | audit_log                                       | actor, action, entity, entity_id, before, after, at                                                                                                 | Append-only                              |
@@ -162,9 +172,13 @@ Penalty on a past-due installment, for days late beyond grace: past-due amount �
 
 **Payment allocation (default order, configurable):** penalties → interest due → principal due → advance principal. Overpayment beyond the loan goes to the member's savings unless the member chooses advance payment.
 
+**Dues schedule and follow-up (S1, R1).** With payroll deduction off, each loan's installments form a dues schedule per member. The system sends reminders before the due date, lists overdue installments by aging bucket, and queues follow-up tasks for the collections officer, who records contacts and promises to pay against the loan. Payments arrive through the teller or as recorded direct payments (bank deposit or transfer reference matched to the member's dues) and are allocated in the configured order.
+
 Screens: Loan calculator · Application · Eligibility result · Evaluation · Approval queue · Release (computation preview, voucher) · Loan inquiry and schedule · Payment posting · Renewal / restructure · Aging report.
 
 ## Payroll deduction
+
+**Release R2 (segment S2).** Built behind the `payroll_deduction` flag, which is OFF for S1 tenants; this section is retained as the design for the S2 release.
 
 One deduction batch per payroll office per month carries the whole cycle: build, approve, send, receive, match, allocate, post.
 
@@ -277,9 +291,9 @@ R1 ships 20 standard outputs; every one filters by branch/unit, payroll office a
 | 6   | Loan releases register                                           | GM, Board                   | Daily / monthly |
 | 7   | Loan portfolio and aging by product, unit, payroll office        | GM, Board, credit committee | Monthly         |
 | 8   | Past-due list with co-makers                                     | Collections, GM             | Weekly          |
-| 9   | Deduction batch and change list                                  | Collections                 | Monthly         |
-| 10  | Remittance reconciliation by payroll office                      | Collections, Accountant     | Monthly         |
-| 11  | Unremitted deductions aging                                      | Collections, GM             | Monthly         |
+| 9   | Deduction batch and change list (S2)                                  | Collections                 | Monthly         |
+| 10  | Remittance reconciliation by payroll office (S2)                      | Collections, Accountant     | Monthly         |
+| 11  | Unremitted deductions aging (S2)                                      | Collections, GM             | Monthly         |
 | 12  | Teller blotter and cash position                                 | Head teller                 | Daily           |
 | 13  | OR register (issued and cancelled)                               | Accountant, auditor         | Daily           |
 | 14  | Daily transaction journal                                        | Accountant, auditor         | Daily           |
@@ -299,9 +313,9 @@ R1 is accepted when these scenarios pass at the design partner on synthetic or a
 | AT-01 | Onboard a payroll-deduction member through Board batch approval                             | Member no. generated; CBU plan and deduction items created; GL posted for initial capital | MB-001–007, SC-002, AC-002 |
 | AT-02 | Duplicate applicant (same name, birthdate, ID)                                              | Flagged; cannot be approved without override reason                                       | MB-003                     |
 | AT-03 | Release a diminishing-balance loan with fee, insurance, CBU retention and prior-loan payoff | Schedule and net proceeds equal the owner's worked example to the centavo; GL balanced    | LN-007, AC-002             |
-| AT-04 | Loan that breaches the take-home-pay floor                                                  | Blocked or warned per configuration; override needs GM approval                           | LN-004, PD-004             |
-| AT-05 | Monthly deduction file for one payroll office                                               | Totals equal the sum of active deduction items; change list correct vs prior month        | PD-003                     |
-| AT-06 | Remittance with partial, zero-pay, unknown and excess lines                                 | Each classified correctly; partials allocated in order; shortfalls listed                 | PD-005–008                 |
+| AT-04 (S2, R2) | Loan that breaches the take-home-pay floor                                                  | Blocked or warned per configuration; override needs GM approval                           | LN-004, PD-004             |
+| AT-05 (S2, R2) | Monthly deduction file for one payroll office                                               | Totals equal the sum of active deduction items; change list correct vs prior month        | PD-003                     |
+| AT-06 (S2, R2) | Remittance with partial, zero-pay, unknown and excess lines                                 | Each classified correctly; partials allocated in order; shortfalls listed                 | PD-005–008                 |
 | AT-07 | Teller receipt split across loan, CBU and savings, then EOD with a shortage                 | One OR; three postings; shortage to suspense; day locks after approval                    | TL-002, TL-004, TL-005     |
 | AT-08 | Reverse a posted payment after day lock                                                     | Requires manager override with reason; original and reversal both visible                 | TL-006, PL-022             |
 | AT-09 | Savings interest run for a month                                                            | ADB, gross interest and withholding equal the worked example                              | SV-003                     |
@@ -310,12 +324,15 @@ R1 is accepted when these scenarios pass at the design partner on synthetic or a
 | AT-12 | CIC file for the month                                                                      | File passes CIC format validation                                                         | CP-001                     |
 | AT-13 | Tenant isolation                                                                            | A user of tenant A cannot read or write any row of tenant B through UI or API             | PL-001, NF-007             |
 | AT-14 | Maker-checker                                                                               | Creator of a withdrawal above limit cannot approve it                                     | PL-022                     |
+| AT-15 (S1) | Loan installment goes overdue with payroll deduction OFF | Reminder sent before due date; installment listed in the overdue queue; follow-up task created; contact and promise to pay recorded | LN-017, LN-018 |
+| AT-16 (S1) | Member pays by bank deposit with a reference | Payment matched to the member's dues; allocated penalty, interest, principal; receipt issued | PD-012, LN-010 |
 
 ## Open items for the design partner
 
 These inputs decide whether the R1 build can start; none can be guessed safely.
 
-- [ ] Sample deduction files and remittance reports for each payroll office (de-identified)
+- [ ] (S2 only) Sample deduction files and remittance reports for each payroll office (de-identified)
+- [ ] (S1) How members pay today (teller, bank deposit, other), the follow-up routine for overdue loans and loan-loss history
 
 - [ ] Loan products with rates, methods, release deductions and penalties, plus three worked examples each
 

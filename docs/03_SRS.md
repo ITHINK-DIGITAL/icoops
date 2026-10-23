@@ -4,6 +4,8 @@ The SRS states what iCOOPs shall do, module by module; each requirement has an I
 
 ## Purpose, scope and conventions
 
+**Segment note (D14, 23 Oct 2026):** R1 is cut for segment S1 (private cooperatives, payroll deduction normally OFF), with PARTNER-S1 as the design partner. Payroll deduction is built behind a per-tenant flag and released in R2 for segment S2 (LGU/government). Federation (S3) features follow in R3; its tenant hierarchy is designed into the R1 schema.
+
 This SRS covers all 21 modules of iCOOPs across releases R1–R3; the Functional Spec tab details only R1.
 
 - **In scope:** multi-tenant SaaS for Philippine cooperatives — platform services, cooperative operations (membership through compliance), member self-service and payments via licensed partners.
@@ -27,13 +29,16 @@ The platform requirements make every tenant isolated, configurable and auditable
 | PL-003 | The system shall provide a sandbox tenant per prospect with synthetic data. | Should | R1 |
 | PL-004 | The system shall bill tenants by subscription tier based on active members, with add-ons and invoices. | Should | R2 |
 | PL-005 | The system shall enable or disable modules and profile packs per tenant through feature flags. | Must | R1 |
+| PL-006 | The system shall assign each tenant a segment (private, government, federation) that selects its default profile pack and feature flags without code changes. | Must | R1 |
+| PL-007 | The system shall model a parent-child tenant hierarchy (federation to member co-ops) in the data model, with a scoped federation role that reads child tenants only through explicit grants and never bypasses row-level security. | Must | R1 (schema) · R3 (features) |
 | PL-010 | The system shall let authorized tenant users define savings, loan, CBU and benefit products from templates without code. | Must | R1 |
 | PL-011 | The system shall store each rule and formula with a version and effective date, and apply the version in force on the transaction date. | Must | R1 |
 | PL-012 | The system shall run a rule against saved worked examples and block activation if any expected result differs. | Must | R1 |
 | PL-013 | The system shall let tenants add custom member fields and required-document lists. | Must | R1 |
 | PL-014 | The system shall route approvals through configurable chains by transaction type, amount and role. | Must | R1 |
 | PL-015 | The system shall generate member, account, OR and voucher numbers from tenant-defined patterns without gaps. | Must | R1 |
-| PL-016 | The system shall install profile packs (PNP-PSMB, DepEd, LGU, corporate) as configuration bundles. | Should | R2 |
+| PL-016 | The system shall install the Government (PNP-PSMB, DepEd, LGU), Corporate and Federation profile packs as configuration bundles. | Should | R2 |
+| PL-017 | The system shall provide the Private profile pack for the first design partner: payroll deduction OFF, teller and direct-pay collection, loan follow-up. | Must | R1 |
 | PL-020 | The system shall authenticate staff by email or mobile with password and OTP-based 2FA. | Must | R1 |
 | PL-021 | The system shall enforce role-based permissions per module, action and amount limit. | Must | R1 |
 | PL-022 | The system shall require a second user (maker-checker) to approve money movements, reversals, back-dating and rate changes. | Must | R1 |
@@ -85,16 +90,18 @@ Savings and loans carry most of the money; every computation here must match own
 | LN-001 | The system shall define loan products with rate, method (diminishing, flat, add-on), terms, fees, penalties, limits and required documents. | Must | R1 |
 | LN-002 | The system shall accept loan applications from branch and PWA, with co-maker consent captured electronically. | Must | R1 (PWA in R2) |
 | LN-003 | The system shall check eligibility: membership age, capital and savings multiples, existing loans, past-due status and co-maker exposure. | Must | R1 |
-| LN-004 | The system shall check net take-home pay after the new amortization against the payroll office's floor and block or warn per configuration. | Must | R1 |
+| LN-004 | The system shall check net take-home pay after the new amortization against the payroll office's floor and block or warn per configuration, when payroll deduction is enabled for the tenant. | Must | R2 |
 | LN-005 | The system shall record credit evaluation notes, CIC report reference and recommended amount. | Must | R1 |
 | LN-006 | The system shall route approval by the tenant's amount matrix and record committee decisions with reasons. | Must | R1 |
 | LN-007 | The system shall compute the amortization schedule and release deductions (fees, insurance, documentary stamp tax, CBU, prior-loan payoff). | Must | R1 |
 | LN-008 | The system shall release by cash, check, bank transfer or e-wallet, generating a disbursement voucher. | Must | R1 |
-| LN-009 | The system shall add amortizations to the member's deduction schedule on release. | Must | R1 |
+| LN-009 | The system shall add amortizations to the member's deduction schedule on release, when payroll deduction is enabled for the tenant. | Must | R2 |
 | LN-010 | The system shall allocate payments in the configured order (default penalty, interest, principal) and handle advance and partial payments. | Must | R1 |
 | LN-011 | The system shall compute penalties on past-due amounts per product rule and grace period. | Must | R1 |
 | LN-012 | The system shall support renewal, top-up and restructuring with configured minimum-paid rules. | Must | R1 |
 | LN-013 | The system shall age the portfolio, tag past-due loans and compute allowance for probable losses. | Must | R1 |
+| LN-017 | The system shall list each member's upcoming and overdue amortizations as a dues schedule, send due-date reminders and queue follow-up tasks for overdue installments. | Must | R1 |
+| LN-018 | The system shall let a collections officer record follow-up contacts, promises to pay and outcomes against past-due loans. | Must | R1 |
 | LN-014 | The system shall generate demand letters by aging bucket. | Should | R2 |
 | LN-015 | The system shall maintain a collateral register and release collateral on full payment. | Should | R2 |
 | LN-016 | The system shall process write-off with Board approval and track recoveries. | Should | R2 |
@@ -105,17 +112,18 @@ These requirements implement processes P3 and P4, the daily and monthly cash cyc
 
 | ID | Requirement | Priority | Release |
 |---|---|---|---|
-| PD-001 | The system shall register payroll offices with file format, cut-off date, remittance account and service-fee rule. | Must | R1 |
-| PD-002 | The system shall keep a deduction schedule per member and item (CBU, savings, loan amortization, benefit dues) with start and stop dates. | Must | R1 |
-| PD-003 | The system shall generate the monthly deduction file per payroll office, plus change lists of new, stopped and amended deductions. | Must | R1 |
-| PD-004 | The system shall flag members whose total deductions would breach the net take-home-pay floor before the file is approved. | Must | R1 |
-| PD-005 | The system shall import remittance files and auto-match lines by member identifier and deduction item. | Must | R1 |
-| PD-006 | The system shall classify each line as matched, partial, zero-pay, unknown member or excess, and queue exceptions for review. | Must | R1 |
-| PD-007 | The system shall allocate short remittances by the tenant's allocation order. | Must | R1 |
-| PD-008 | The system shall carry forward or bill shortfalls and notify affected members. | Must | R1 |
-| PD-009 | The system shall reconcile expected vs received by payroll office and month, and age unremitted amounts. | Must | R1 |
-| PD-010 | The system shall compute and post payroll office service fees deducted from remittances. | Should | R1 |
+| PD-001 | The system shall register payroll offices with file format, cut-off date, remittance account and service-fee rule. | Must | R2 |
+| PD-002 | The system shall keep a deduction schedule per member and item (CBU, savings, loan amortization, benefit dues) with start and stop dates. | Must | R2 |
+| PD-003 | The system shall generate the monthly deduction file per payroll office, plus change lists of new, stopped and amended deductions. | Must | R2 |
+| PD-004 | The system shall flag members whose total deductions would breach the net take-home-pay floor before the file is approved. | Must | R2 |
+| PD-005 | The system shall import remittance files and auto-match lines by member identifier and deduction item. | Must | R2 |
+| PD-006 | The system shall classify each line as matched, partial, zero-pay, unknown member or excess, and queue exceptions for review. | Must | R2 |
+| PD-007 | The system shall allocate short remittances by the tenant's allocation order. | Must | R2 |
+| PD-008 | The system shall carry forward or bill shortfalls and notify affected members. | Must | R2 |
+| PD-009 | The system shall reconcile expected vs received by payroll office and month, and age unremitted amounts. | Must | R2 |
+| PD-010 | The system shall compute and post payroll office service fees deducted from remittances. | Should | R2 |
 | PD-011 | The system shall support field collectors with routes and receipts for direct-pay members. | Could | R3 |
+| PD-012 | The system shall record member direct payments (teller, bank deposit slip or transfer reference) and match them to the member's dues. | Must | R1 |
 | TL-001 | The system shall open and close teller sessions with cash limits and opening cash. | Must | R1 |
 | TL-002 | The system shall post one payment across several accounts of a member and issue one official receipt. | Must | R1 |
 | TL-003 | The system shall post withdrawals, loan releases and refunds against vouchers with required approvals. | Must | R1 |
@@ -229,7 +237,7 @@ R1 integrates by file, which every payroll office and regulator already accepts;
 
 | Interface | Direction | Method | Release |
 |---|---|---|---|
-| Payroll offices (DepEd APDS, PNP, LGU, company HR) | Out: deduction file · In: remittance report | Files in each office's format | R1 |
+| Payroll offices (DepEd APDS, PNP, LGU, company HR) | Out: deduction file · In: remittance report | Files in each office's format | R2 |
 | Banks | In: statement for reconciliation | CSV/Excel upload | R1 |
 | CIC (credit information) | Out: credit data submission | File per CIC specification | R1 |
 | SMS and email providers | Out: notifications | API | R1 |
@@ -250,11 +258,12 @@ Data requirements:
 
 These items must be settled with the design partner before the R1 build starts.
 
-- **Assumption:** the design partner is a payroll-deduction cooperative with 1,000–20,000 members and one to five payroll offices.
+- **Assumption:** the design partner (PARTNER-S1) is a private cooperative (segment S1) with payroll deduction off and 1,000–20,000 members.
 - **Assumption:** members accept PWA rather than native apps.
 - **Constraint:** iThink standard stack — Next.js, Supabase PostgreSQL, Vercel, GitHub; Python only for batch and computation jobs.
 - **Constraint:** no client-specific code; differences go into configuration or profile packs.
-- **Open:** the design partner's payroll file formats and remittance report layouts (samples needed).
+- **Open (S2 only):** payroll file formats and remittance report layouts for government tenants.
+- **Open (S1):** how PARTNER-S1's members pay today (teller, bank deposit, other) and its follow-up routine for overdue loans.
 - **Open:** approved formulas and worked examples for interest, loans, penalties, dividends and patronage refunds.
 - **Open:** the cooperative's current chart of accounts and CDA report set.
 - **Open:** approval matrix and role mapping for the partner's staff.

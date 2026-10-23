@@ -17,6 +17,8 @@ Machine-readable copy: [worked_examples/starter.json](worked_examples/starter.js
 | C7 | Short remittance allocation order: loan, then CBU, then savings (benefit dues sit between loan and CBU when present) | PD-007 |
 | C8 | Take-home-pay check passes when take-home after the new amortization is greater than or equal to the floor | LN-004, PD-004 |
 
+Segment applicability: sections 7 (remittance allocation) and 8 (take-home-pay floor) belong to the S2 release (payroll deduction on). Sections 1 to 6 apply to S1 in R1.
+
 Open for Jun or PARTNER-S1 to confirm: C3, C4 and C5 are business rules, not math. A different rounding choice produces different centavos.
 
 ## 1. Loan interest — diminishing balance (LN-007)

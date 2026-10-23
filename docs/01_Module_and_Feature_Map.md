@@ -14,7 +14,7 @@ Channels sit on cooperative operations, which sit on a shared platform; a new co
 
 ## Module summary
 
-Fifteen of the 21 modules start in R1, five of them in basic form; the rest wait until the design partner is live.
+Fifteen of the 21 modules start in R1, some of them in basic form; the rest wait until the design partner is live. R1 is cut for segment S1 (private co-ops, payroll deduction off); payroll deduction is released in R2 for segment S2 and federation features in R3.
 
 | \#  | Module                            | Purpose                                                                          | Release                    | Edition               |
 |-----|-----------------------------------|----------------------------------------------------------------------------------|----------------------------|-----------------------|
@@ -28,7 +28,7 @@ Fifteen of the 21 modules start in R1, five of them in basic form; the rest wait
 | 2   | Share Capital and CBU             | Subscriptions, paid-up capital, CBU plans, withdrawals, transfers                | R1                         | Core                  |
 | 3   | Savings and Deposits              | Savings, time deposits, interest, holds, statements                              | R1                         | Core                  |
 | 4   | Loans                             | Origination to closure: eligibility, approval, release, amortization, collection | R1                         | Core                  |
-| 5   | Payroll Deduction and Collections | Deduction files per payroll office, remittance matching, shortfalls, allocation  | R1                         | Core — differentiator |
+| 5   | Payroll Deduction and Collections | Deduction files per payroll office, remittance matching, shortfalls, allocation  | R1 direct-pay basic · R2 payroll deduction (S2) | Core — differentiator |
 | 6   | Teller and Cashiering             | OR issuance, cash/cheque posting, cash count, end-of-day                         | R1                         | Core                  |
 | 7   | Dividends and Patronage Refund    | Year-end computation, simulation, approval, allocation                           | R2                         | Core                  |
 | 8   | Mutual Benefits and Claims        | Damayan, death, hospitalization, calamity benefits; insurer claims               | R2                         | Core                  |
@@ -231,6 +231,8 @@ Profile packs are how one codebase serves very different co-ops: each pack is co
 | PNP / PSMB             | Rank, badge/serial, unit, assignment fields; PNP payroll deduction format; unit-level structure and reports | Police and uniformed-service co-op groups                    |
 | DepEd teachers         | Division/school fields; APDS deduction file and service-fee handling; NTHP check                            | Teacher and DepEd employee co-ops   |
 | LGU and GOCC employees | Office/department fields; LGU payroll formats                                                               | Provincial and city employee co-ops |
+| Private (S1) | Payroll deduction OFF; teller and direct-pay collection; loan follow-up and dues schedule | PARTNER-S1 and similar private co-ops |
+| Federation (S3, R3) | Parent-child tenant hierarchy, scoped federation role, consolidated reports | Federations of member co-ops |
 | Corporate employee     | Employer HR file formats, payroll cut-offs, separation clearance                                            | Company employee co-ops             |
 | Community credit (R3)  | Collector routes, branch lending, OTC-heavy flows                                                           | MPCs outside payroll channels       |
 

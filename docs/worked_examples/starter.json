@@ -108,7 +108,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-DIM-02",
@@ -123,7 +124,8 @@
     "installment": "101000.00",
     "total_interest": "1000.00"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-DIM-03",
@@ -138,7 +140,8 @@
     "installment": "1000.00",
     "total_interest": "0.00"
    },
-   "note": "zero-rate loan"
+   "note": "zero-rate loan",
+   "segment": "ALL"
   },
   {
    "id": "LN-FLAT-01",
@@ -153,7 +156,8 @@
     "total_interest": "5000.00",
     "installment": "5500.00"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-FLAT-02",
@@ -168,7 +172,8 @@
     "total_interest": "500.00",
     "installment": "50500.00"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-FLAT-03",
@@ -183,7 +188,8 @@
     "total_interest": "670.83",
     "installment": "1524.40"
    },
-   "note": "rounding: installment does not divide evenly; last installment adjusts"
+   "note": "rounding: installment does not divide evenly; last installment adjusts",
+   "segment": "ALL"
   },
   {
    "id": "LN-DISC-01",
@@ -199,7 +205,8 @@
     "installment": "10000.00",
     "net_before_other_deductions": "56400.00"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-REL-01",
@@ -221,7 +228,8 @@
     "gl_debits": "100000",
     "gl_credits": "100000.00"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "SV-ADB-01",
@@ -239,7 +247,8 @@
     "withholding": "4.93",
     "net_interest": "19.73"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "SV-MMB-01",
@@ -257,7 +266,8 @@
     "withholding": "2.47",
     "net_interest": "9.86"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "SV-ADB-02",
@@ -275,7 +285,8 @@
     "gross_interest": "24.66",
     "note": "ADB equals minimum: earns"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "SV-ADB-03",
@@ -293,7 +304,8 @@
     "withholding": "0.00",
     "net_interest": "0.00"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-PEN-01",
@@ -312,7 +324,8 @@
     "cap": "888.49",
     "penalty": "355.40"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-PEN-02",
@@ -331,7 +344,8 @@
     "cap": "888.49",
     "penalty": "0.00"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-PEN-03",
@@ -350,7 +364,8 @@
     "cap": "888.49",
     "penalty": "888.49"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-ALLOC-01",
@@ -369,7 +384,8 @@
     "principal": "3644.60",
     "excess": "0.00"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-ALLOC-02",
@@ -388,7 +404,8 @@
     "excess": "759.72",
     "note": "excess to savings unless member chooses advance principal"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "LN-ALLOC-03",
@@ -406,7 +423,8 @@
     "principal": "0",
     "excess": "0"
    },
-   "note": ""
+   "note": "",
+   "segment": "ALL"
   },
   {
    "id": "PD-REM-01",
@@ -424,7 +442,8 @@
     "shortfall": "0",
     "excess": "0"
    },
-   "note": ""
+   "note": "",
+   "segment": "S2"
   },
   {
    "id": "PD-REM-02",
@@ -442,7 +461,8 @@
     "shortfall": "800",
     "excess": "0"
    },
-   "note": ""
+   "note": "",
+   "segment": "S2"
   },
   {
    "id": "PD-REM-03",
@@ -459,7 +479,8 @@
     "shortfall": "4000",
     "excess": "0"
    },
-   "note": ""
+   "note": "",
+   "segment": "S2"
   },
   {
    "id": "PD-REM-04",
@@ -476,7 +497,8 @@
     "shortfall": "0",
     "excess": "150"
    },
-   "note": ""
+   "note": "",
+   "segment": "S2"
   },
   {
    "id": "PD-NTHP-01",
@@ -491,7 +513,8 @@
     "take_home_after": "5115.12",
     "result": "pass"
    },
-   "note": ""
+   "note": "",
+   "segment": "S2"
   },
   {
    "id": "PD-NTHP-02",
@@ -506,7 +529,8 @@
     "take_home_after": "5000.00",
     "result": "pass"
    },
-   "note": ""
+   "note": "",
+   "segment": "S2"
   },
   {
    "id": "PD-NTHP-03",
@@ -521,7 +545,8 @@
     "take_home_after": "4999.99",
     "result": "fail"
    },
-   "note": ""
+   "note": "",
+   "segment": "S2"
   }
  ]
 }
