@@ -21,6 +21,10 @@ Multi-tenant cooperative management SaaS for Philippine cooperatives, by iThink 
 | [docs/04_Functional_Spec_R1.md](docs/04_Functional_Spec_R1.md) | R1 architecture, data model, rules, formulas, tests |
 | [docs/07_Decision_Log_and_Open_Questions.md](docs/07_Decision_Log_and_Open_Questions.md) | Decisions made and still open |
 
+## Demo
+
+[demo/r1-demo.html](demo/r1-demo.html) is a single-file R1 clickable prototype. It uses synthetic data only; thresholds, fees and limits shown are illustrative placeholders, not approved product rules. Open it in a browser.
+
 Working with Claude Code? Start with [CLAUDE.md](CLAUDE.md).
 
 All documents are working drafts and not yet owner-approved. Diagrams were exported from the source documents as images.
