@@ -63,7 +63,7 @@ LN-FLAT-03 note: 10,000.00 at 11.5% for 7 months gives I = 670.83 and A = 1,524.
 
 ## 3. Release deductions and GL balance (LN-007, AC-002)
 
-Inputs (placeholders): P = 100,000.00; service fee 2.0%%; insurance 0.5%%; DST 0.00 (pending the co-op's tax adviser); CBU retention 2.0%%; prior-loan payoff 10,000.00.
+Inputs (placeholders): P = 100,000.00; service fee 2.0%; insurance 0.5%; DST 0.00 (pending the co-op's tax adviser); CBU retention 2.0%; prior-loan payoff 10,000.00.
 
 | Item | Amount |
 |---|---|
