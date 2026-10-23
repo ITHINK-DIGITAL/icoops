@@ -20,6 +20,7 @@ Created 18 Oct 2026 at handoff install. Status values: OPEN · PROPOSED (Claude)
 | D10 | Hosting & data residency | On-prem, Azure, AWS, "AWS GovCloud" | AWS/Azure PH-accessible regions; drop GovCloud (US-only); DPA/NPC compliance posture documented | PROPOSED |
 | D11 | First anchor customer / design partner | Several candidate organisations appear in history | Pick ONE paying design-partner coop before building beyond MVP | OPEN |
 | D12 | Pricing model | One-time build + AMC + managed services (2024) | Onboarding fee + per-active-member/month with tier floors; managed services as add-on | OPEN |
+| D13 | Repository visibility | Public vs private | Public acceptable only while it holds engineering docs; commercial material stays out | DECIDED (Jun, 23 Oct 2026): repo stays public; business case, pricing and named prospects stay out |
 
 ## B. Conflicts to keep visible (do not silently merge)
 
