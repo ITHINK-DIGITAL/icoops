@@ -63,7 +63,7 @@ Parameters already named in the Functional Spec, plus the ones found hard-coded 
 
 | Area | Parameters |
 |---|---|
-| Calculation conventions (NEW) | Rounding mode and precision for money and rates; installment rounding; last-installment adjustment on or off; rounding order (round gross then tax, or the reverse); day-count basis for loans and for savings (365, 360, actual); penalty day divisor (default 30) |
+| Calculation conventions (NEW) | Rounding mode and precision for money and rates; installment rounding; last-installment adjustment on or off; rounding order (round gross then tax, or the reverse); day-count basis for loans and for savings (365, 360, actual); penalty day divisor (default 30); penalty accrual start (after grace, default, or from due date); penalty base (past-due installment, default) |
 | Savings interest | Annual rate, balance method, posting frequency, minimum balance to earn, withholding tax %, dormancy months |
 | Loan interest | Annual rate, method, compounding, day-count |
 | Terms and amounts | Min and max term and amount, multiples of capital and savings |

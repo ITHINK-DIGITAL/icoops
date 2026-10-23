@@ -21,7 +21,7 @@ C1 to C8 are default values of configurable parameters, not fixed rules. Each te
 
 Segment applicability: sections 7 (remittance allocation) and 8 (take-home-pay floor) belong to the S2 release (payroll deduction on). Sections 1 to 6 apply to S1 in R1.
 
-Open for Jun or PARTNER-S1 to confirm: C3, C4 and C5 are business rules, not math. A different rounding choice produces different centavos.
+C3, C4 and C5 are business rules, not math; a different choice produces different centavos. Recommended defaults adopted by Jun on 23 Oct 2026 (D17, docs/09). PARTNER-S1's real ledgers will confirm or change the parameter values.
 
 ## 1. Loan interest — diminishing balance (LN-007)
 
@@ -141,6 +141,6 @@ Take-home before the new amortization 14,000.00; floor 5,000.00 (placeholder).
 
 | Item | Owner | Status |
 |---|---|---|
-| Conventions C1–C8 | Jun / PARTNER-S1 finance | Pending |
+| Conventions C1–C8 | Jun / PARTNER-S1 finance | C3–C5 defaults adopted (D17); PARTNER-S1 confirmation pending |
 | Vector inputs replaced with PARTNER-S1 parameters | PARTNER-S1 | Pending |
 | Vectors independently recomputed (spreadsheet or PARTNER-S1 accountant) | PARTNER-S1 | Pending |

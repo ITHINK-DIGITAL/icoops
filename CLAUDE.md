@@ -13,7 +13,7 @@ Next.js + React (PWA) · Supabase PostgreSQL (RLS on `tenant_id`) · JSON APIs �
 
 ## Source of truth (read in this order)
 1. `docs/07_Decision_Log_and_Open_Questions.md` — what is decided vs open
-   (also read `docs/08_Configurability_and_Library_Standard.md` before writing any calculation or rule code)
+   (also read `docs/08_Configurability_and_Library_Standard.md` before writing any calculation or rule code, and `docs/09_PARTNER-S1_Input_Request.md` for the adopted conventions and the partner input list)
 2. `docs/05_Worked_Examples_Starter.md` + `docs/worked_examples/starter.json` — synthetic engine test vectors (pending approval); load them in the rule tester
 3. `docs/04_Functional_Spec_R1.md` — data model, rules, formulas, posting, roles, tests (R1)
 4. `docs/03_SRS.md` — requirement IDs (e.g. LN-012), priority, release
