@@ -67,4 +67,6 @@ Rules:
 2. A segment never changes the code; it changes only the profile pack, feature flags and tenant hierarchy.
 3. Placing a prospect: who deducts from salary, if anyone; one tenant or a group of co-ops; where the member pays.
 
-Open: PARTNER-S1's segment (decides R1 scope); federation hierarchy design.
+PARTNER-S1 is the design partner and belongs to segment S1 (private, payroll deduction normally OFF). R1 is therefore cut for S1; S2 (government) and S3 (federation) follow.
+
+Open: federation hierarchy design.
