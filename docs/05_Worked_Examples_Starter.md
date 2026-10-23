@@ -1,6 +1,6 @@
 # Worked Examples — Starter Set (v0.1)
 
-**Status: SYNTHETIC. Pending owner approval.** These reference vectors test the *calculation engine*. Every rate, fee and limit below is an illustrative placeholder, not a product rule, and nothing here is advice on DST, withholding tax or exemption status. Partner-A's real product parameters will replace the inputs; the formulas and conventions are what these vectors lock down.
+**Status: SYNTHETIC. Pending owner approval.** These reference vectors test the *calculation engine*. Every rate, fee and limit below is an illustrative placeholder, not a product rule, and nothing here is advice on DST, withholding tax or exemption status. PARTNER-S1's real product parameters will replace the inputs; the formulas and conventions are what these vectors lock down.
 
 Machine-readable copy: [worked_examples/starter.json](worked_examples/starter.json). The rule tester (PL-012) should load it and fail the build on any mismatch.
 
@@ -17,7 +17,7 @@ Machine-readable copy: [worked_examples/starter.json](worked_examples/starter.js
 | C7 | Short remittance allocation order: loan, then CBU, then savings (benefit dues sit between loan and CBU when present) | PD-007 |
 | C8 | Take-home-pay check passes when take-home after the new amortization is greater than or equal to the floor | LN-004, PD-004 |
 
-Open for Jun or Partner-A to confirm: C3, C4 and C5 are business rules, not math. A different rounding choice produces different centavos.
+Open for Jun or PARTNER-S1 to confirm: C3, C4 and C5 are business rules, not math. A different rounding choice produces different centavos.
 
 ## 1. Loan interest — diminishing balance (LN-007)
 
@@ -129,7 +129,7 @@ Take-home before the new amortization 14,000.00; floor 5,000.00 (placeholder).
 
 ## Not covered yet
 
-- Dividend on share capital and patronage refund (DV-002, DV-003): R2; method and rates depend on the by-laws and Partner-A's approved practice.
+- Dividend on share capital and patronage refund (DV-002, DV-003): R2; method and rates depend on the by-laws and PARTNER-S1's approved practice.
 - Time-deposit pre-termination, restructuring and renewal rules (LN-012): need product parameters.
 - Net surplus allocation percentages: by-laws.
 
@@ -137,6 +137,6 @@ Take-home before the new amortization 14,000.00; floor 5,000.00 (placeholder).
 
 | Item | Owner | Status |
 |---|---|---|
-| Conventions C1–C8 | Jun / Partner-A finance | Pending |
-| Vector inputs replaced with Partner-A parameters | Partner-A | Pending |
-| Vectors independently recomputed (spreadsheet or Partner-A accountant) | Partner-A | Pending |
+| Conventions C1–C8 | Jun / PARTNER-S1 finance | Pending |
+| Vector inputs replaced with PARTNER-S1 parameters | PARTNER-S1 | Pending |
+| Vectors independently recomputed (spreadsheet or PARTNER-S1 accountant) | PARTNER-S1 | Pending |
