@@ -48,7 +48,7 @@ Every calculation library (interest, amortization, penalty, allocation, fees, po
 | L3 | Parameters are validated against a published schema (type, range, allowed values) before the library runs; an invalid parameter set is rejected, never silently defaulted. |
 | L4 | Deterministic and decimal-only: the same input and parameters always give the same result to the centavo. |
 | L5 | Every result records library name, library version and the rule-version ID used, so any past figure can be reproduced. |
-| L6 | One canonical implementation per calculation. If the Python batch jobs and the Next.js app both compute the same thing, the shared vectors in `docs/worked_examples/` must pass in both languages on every build. |
+| L6 | One canonical implementation per calculation, in TypeScript with a decimal library (decided 23 Oct 2026). Python is used for orchestration and report jobs and does not re-implement calculations; any Python code that touches a calculation must pass the shared vectors in `docs/worked_examples/` on every build. |
 | L7 | Libraries carry no segment or tenant branches. Segment differences arrive as parameters or feature flags. |
 
 CI enforcement:
@@ -97,5 +97,5 @@ The worked-examples conventions C1 to C8 are therefore defaults. That removes th
 
 ## 7. Open items
 
+- Canonical language: DECIDED, TypeScript with a decimal library.
 - Choose the expression language for T3 (R2). It must be restricted, sandboxed, free of side effects and resource-limited.
-- Choose the canonical language for the calculation libraries (TypeScript or Python) and how the other language consumes them, to limit drift (L6).

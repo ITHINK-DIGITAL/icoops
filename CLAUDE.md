@@ -23,7 +23,7 @@ Next.js + React (PWA) · Supabase PostgreSQL (RLS on `tenant_id`) · JSON APIs �
 If documents conflict, the Decision Log wins, then FS, then SRS. Status of every doc is v0.1 draft: nothing is owner-approved yet.
 
 ## Non-negotiable engineering rules
-- Configurability standard (`docs/08_Configurability_and_Library_Standard.md`): every calculation library is a pure, parameter-based function; no business constant, tenant name or segment branch in calculation code; every business rule is a typed, versioned, effective-dated parameter set (tiers T0 to T3) tested against worked examples before activation.
+- Configurability standard (`docs/08_Configurability_and_Library_Standard.md`): every calculation library is a pure, parameter-based TypeScript function (decimal library, no floats; Python never re-implements a calculation); no business constant, tenant name or segment branch in calculation code; every business rule is a typed, versioned, effective-dated parameter set (tiers T0 to T3) tested against worked examples before activation.
 - No client-specific code. Differences live in tenant configuration or profile packs (PNP-PSMB, DepEd, LGU, corporate).
 - Every table has `tenant_id` and row-level security; automated cross-tenant access tests run in CI.
 - Money: `numeric(18,2)`, rates `numeric(9,6)`, decimal arithmetic only, 2-dp half-up unless a product rule says otherwise. No floats.
