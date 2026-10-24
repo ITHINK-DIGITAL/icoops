@@ -14,7 +14,7 @@ Status: PREPARED 24 Oct 2026 at Jun's instruction (D21): all development happens
 |---|---|---|
 | Supabase project (org iThink Technologies), one for dev | Jun approves creation | Staging and production projects come later |
 | Vercel project (team iThink) linked to the GitHub repo | Jun approves | Preview deploys per pull request |
-| GitHub: branch protection on main once code exists | Jun | Require CI green and one review |
+| GitHub: branch protection on main (confirmed 24 Oct 2026) | Jun | Turn on after the first CI run in slice 1, because a required check must exist first: require a pull request, CI green and one review. Documentation-only pushes then also go through a pull request, or Jun allows an exception for docs/ |
 | Secrets | Jun | Stored in Vercel and Supabase settings only. Never `.env` files in git |
 
 ## 3. Proposed repo layout (confirm in slice 1)
