@@ -55,7 +55,7 @@ Create these as sandbox users with synthetic data. No names or real emails in th
 
 ## 6. Working agreements
 
-- Code changes go through pull requests with CI green; documentation may go straight to main.
+- Code changes go through one pull request per slice, with CI green; Jun reviews and merges (confirmed 24 Oct 2026). Documentation may go straight to main.
 - Any decision goes in docs/07 in the same commit. Any change to a rule or convention updates docs/05, docs/08 and the vectors together.
 - Never hard-code dividend, patronage refund or deduction-file formulas: their examples are not approved (R2).
 - Update the Status section of CLAUDE.md at the end of every session.
