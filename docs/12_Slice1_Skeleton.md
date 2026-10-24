@@ -146,7 +146,7 @@ Seed users sign in as `<role>.<a|b>@example.test` with the published development
 | `plpgsql_check` on all 21 plpgsql functions | Locally (the same check `supabase db lint` runs): no findings |
 | Lint, type check, unit tests (63), vectors, `next build`, production smoke run, audit | Locally, all passing |
 | `supabase start`, `db reset` with the seed, `supabase db lint`, and all 197 pgTAP checks on the real Supabase image | CI `db` job, first run on the pull request: all passed |
-| API tests (`tests/isolation`) | Not runnable locally (no Docker in the build environment); CI `db` job. The first run failed on a configuration error (email provider disabled in `config.toml`), fixed in the next push |
+| API tests (`tests/isolation`) | Not runnable locally (no Docker in the build environment); CI `db` job. The first runs failed on two setup errors that only the real GoTrue could show: the email provider disabled in `config.toml`, and seeded `auth.users` rows leaving token columns NULL (GoTrue then fails sign-in with "Database error querying schema"). Both fixed; the local stub now enforces the non-null token columns |
 
 ## 9. Deviations from the approved proposal (D27)
 

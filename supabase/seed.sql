@@ -41,13 +41,16 @@ begin
       v_email := (v_user ->> 0) || '.' || (v_tenant ->> 'key') || '@example.test';
       insert into auth.users
         (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at,
-         raw_app_meta_data, raw_user_meta_data, confirmation_token, recovery_token,
-         email_change_token_new, email_change, created_at, updated_at)
+         raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+         -- GoTrue reads these token columns as non-null strings: a NULL in any of them makes
+         -- sign-in fail with "Database error querying schema", so every one is set explicitly.
+         confirmation_token, recovery_token, email_change_token_new, email_change,
+         email_change_token_current, phone_change, phone_change_token, reauthentication_token)
       values
         (v_auth_id, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
          v_email, extensions.crypt(c_password, extensions.gen_salt('bf')), now(),
-         '{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb, '', '', '', '',
-         now(), now());
+         '{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb, now(), now(),
+         '', '', '', '', '', '', '', '');
       insert into auth.identities (user_id, provider_id, provider, identity_data)
       values (v_auth_id, v_auth_id::text, 'email',
               jsonb_build_object('sub', v_auth_id::text, 'email', v_email));

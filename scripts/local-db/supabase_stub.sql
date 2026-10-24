@@ -21,10 +21,16 @@ create table auth.users (
   email_confirmed_at timestamptz,
   raw_app_meta_data jsonb,
   raw_user_meta_data jsonb,
-  confirmation_token text default '',
-  recovery_token text default '',
-  email_change_token_new text default '',
-  email_change text default '',
+  -- Token columns have no default here on purpose: GoTrue needs them non-null, so a seed that
+  -- forgets one must fail locally instead of only against the real stack.
+  confirmation_token text not null,
+  recovery_token text not null,
+  email_change_token_new text not null,
+  email_change text not null,
+  email_change_token_current text not null,
+  phone_change text not null,
+  phone_change_token text not null,
+  reauthentication_token text not null,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
