@@ -14,7 +14,7 @@ Status: PREPARED 24 Oct 2026 at Jun's instruction (D21): all development happens
 |---|---|---|
 | Supabase project (org iThink Technologies), one for dev | Jun approves creation | Staging and production projects come later |
 | Vercel project (team iThink) linked to the GitHub repo | Jun approves | Preview deploys per pull request |
-| GitHub: branch protection on main (confirmed 24 Oct 2026) | Jun | Turn on after the first CI run in slice 1, because a required check must exist first: require a pull request, CI green and one review. Documentation-only pushes then also go through a pull request, or Jun allows an exception for docs/ |
+| GitHub: branch protection on main (confirmed 24 Oct 2026) | Jun | Turn on after the first CI run in slice 1, because a required check must exist first: require a pull request, CI green and one review. Everything, documentation included, goes through a pull request (D22); Jun keeps administrator bypass for emergency fixes only |
 | Secrets | Jun | Stored in Vercel and Supabase settings only. Never `.env` files in git |
 
 ## 3. Proposed repo layout (confirm in slice 1)
@@ -55,7 +55,7 @@ Create these as sandbox users with synthetic data. No names or real emails in th
 
 ## 6. Working agreements
 
-- Code changes go through one pull request per slice, with CI green; Jun reviews and merges (confirmed 24 Oct 2026). Documentation may go straight to main.
+- Code changes go through one pull request per slice, with CI green; Jun reviews and merges (confirmed 24 Oct 2026). Once branch protection is on, documentation also goes through pull requests; docs/05, docs/07 and starter.json are test inputs and decision records, so they get the same review and CI as code.
 - Any decision goes in docs/07 in the same commit. Any change to a rule or convention updates docs/05, docs/08 and the vectors together.
 - Never hard-code dividend, patronage refund or deduction-file formulas: their examples are not approved (R2).
 - Update the Status section of CLAUDE.md at the end of every session.
