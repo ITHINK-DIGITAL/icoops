@@ -131,3 +131,16 @@ jobs:
           echo "::add-mask::$SERVICE_ROLE_KEY"
           export SUPABASE_URL="$API_URL" SUPABASE_ANON_KEY="$ANON_KEY" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY"
           pnpm test:isolation
+      - name: Diagnostics (only when a step above failed; prints no keys)
+        if: failure()
+        run: |
+          echo "--- columns that are NULL on the seeded auth.users rows"
+          psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -At \
+            -c "select u.email, array_agg(e.key order by e.key) from auth.users u, jsonb_each(to_jsonb(u)) e where e.value = 'null'::jsonb group by 1 order by 1 limit 3" || true
+          echo "--- auth container log (tail)"
+          docker logs supabase_auth_icoops --tail 60 2>&1 | tail -60 || true
+          echo "--- one direct password grant"
+          eval "$(supabase status -o env | sed 's/^/export /')"
+          curl -s -X POST "$API_URL/auth/v1/token?grant_type=password" \
+            -H "apikey: $ANON_KEY" -H "Content-Type: application/json" \
+            -d '{"email":"teller.a@example.test","password":"local-dev-only-password"}' | head -c 400 || true
