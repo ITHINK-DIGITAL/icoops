@@ -17,7 +17,7 @@ Status: PREPARED 24 Oct 2026 at Jun's instruction (D21): all development happens
 | GitHub: branch protection on main (confirmed 24 Oct 2026) | Jun | Turn on after the first CI run in slice 1, because a required check must exist first: require a pull request, CI green and one review. Everything, documentation included, goes through a pull request (D22); Jun keeps administrator bypass for emergency fixes only |
 | Secrets | Jun | Stored in Vercel and Supabase settings only. Never `.env` files in git |
 
-## 3. Proposed repo layout (confirm in slice 1)
+## 3. Repo layout (confirmed in slice 1, see docs/12)
 
 | Path | Purpose |
 |---|---|
@@ -27,7 +27,10 @@ Status: PREPARED 24 Oct 2026 at Jun's instruction (D21): all development happens
 | packages/vectors | Loader and runner for docs/worked_examples/starter.json |
 | supabase/migrations | SQL migrations: every table has tenant_id and row-level security |
 | supabase/tests | Database tests, including cross-tenant access tests (AT-13) |
-| .github/workflows | CI: lint, type check, unit tests, vectors, literal lint, RLS tests |
+| packages/db | Typed Supabase client factories and wrappers for the guarded database functions; the create-tenant admin script |
+| packages/config | Shared ESLint base |
+| tests/isolation | API-level AT-13 and AT-14 with real user tokens, run against the local Supabase stack |
+| .github/workflows | CI, five required checks: static (format, lint, types, literal guards, forbidden terms, audit), unit, vectors, build, db (migrations, database lint, pgTAP, API tests) |
 
 ## 4. Build slices (in order)
 
@@ -42,6 +45,8 @@ Status: PREPARED 24 Oct 2026 at Jun's instruction (D21): all development happens
 | 7 Thin payroll deduction | One payroll office, one configurable file format, change list, remittance import, matching, allocation, shortfalls, reconciliation (D19) | AT-05 and AT-06 pass; PD-REM vectors pass |
 | 8 Follow-up and aging | Reminders, overdue queue, tasks, promises to pay, aging buckets | AT-15 passes |
 | 9 GL posting and reports | Posting rules, subledger checks, period close, the R1 reports | AT-09, AT-11 pass; the R1 reports in the FS run |
+
+Slice status: slice 1 is built and awaiting review (docs/12). Slice 2 starts with the findings in docs/12 section 10.
 
 ## 5. Review roles in the sandbox tenant (D20)
 

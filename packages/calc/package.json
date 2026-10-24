@@ -1,0 +1,26 @@
+{
+  "name": "@icoops/calc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pure, parameter-based calculation libraries (docs/08 L1 to L7). No formulas until slice 2.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint . && node scripts/lint-selftest.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "decimal.js": "10.6.0"
+  },
+  "devDependencies": {
+    "@icoops/config": "workspace:*",
+    "@types/node": "22.20.5",
+    "eslint": "9.39.5",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "3.2.7"
+  }
+}

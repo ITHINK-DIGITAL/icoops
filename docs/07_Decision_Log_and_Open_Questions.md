@@ -30,6 +30,11 @@ Created 18 Oct 2026 at handoff install. Status values: OPEN · PROPOSED (Claude)
 | D20 | Reviewers and approvers by role, not by name | Named people vs role-based access | DECIDED (Jun, 24 Oct 2026): use role-based access with placeholders such as Treasurer-1, Accountant-1 and Tax-Adviser-1 for the review of the standard; no individual names in this repo. Roles map to the FS security templates; reviewers get read-only access in the sandbox tenant |
 | D21 | Development moves to Claude Code | Continue in claude.ai vs build in Claude Code | DECIDED (Jun, 24 Oct 2026): all development happens in Claude Code from this repo; docs/11 is the kickoff |
 | D22 | Pull requests and branch protection | Direct pushes to main vs pull requests | DECIDED (Jun, 24 Oct 2026, on Claude's recommendation): one pull request per slice, reviewed and merged by Jun; once the first CI run exists, protect main (pull request, CI green, one review) for code and documentation alike; Jun keeps administrator bypass for emergencies |
+| D23 | Identity and platform tenant | One sign-in per person across tenants vs one per tenant; where platform defaults and shared vectors live when every table needs tenant_id | DECIDED (Jun, 24 Oct 2026, with the slice 1 proposal): one sign-in identity belongs to exactly one tenant in R1; reviewers and iThink staff get a separate sign-in per tenant; multi-tenant users and federation grants (PL-007) extend this in R3. Platform defaults and the shared worked-example vectors live under a reserved platform tenant, readable by every tenant on rule_version and worked_example only and writable only by a reviewed migration, never by an API role, the service key included |
+| D24 | No hosted projects in slice 1 | Create the Supabase and Vercel projects now vs after the slice | DECIDED (Jun, 24 Oct 2026): slice 1 and its CI run on a local Supabase stack; the dev Supabase project and the Vercel project are created only after the slice merges and only with Jun's approval (docs/11 section 2) |
+| D25 | Platform path for tenants and first users | Admin screen vs script | DECIDED (Jun, 24 Oct 2026): tenants and their first administrator are created by an audited server-side script using the service key (`pnpm --filter @icoops/db admin:create-tenant`); every row it writes is audited with actor_kind service; no admin screen until needed |
+| D26 | Keeping real names out of a public repo | A blocklist in the repo (would itself name them) vs a secret | DECIDED (Jun, 24 Oct 2026): real partner and employer names are held in the GitHub Actions secret `FORBIDDEN_TERMS` (one per line); CI scans the whole repository with it and reports file and line only; required on pushes to main. Jun sets the secret |
+| D27 | Slice 1 deviations from the approved proposal | See docs/12 section 9 | PROPOSED (Claude, 24 Oct 2026), for review in the slice 1 pull request: row-level security enabled but not forced; no insert or update policy on audit_log; gitleaks replaced by the repository's own scanner plus GitHub secret scanning; five required checks instead of four; `withdrawal_above_limit` is a real request type with no executor until slice 6; no coverage tool yet; TypeScript 5.9, ESLint 9, Next 15.5, zod 4; reviewer sandbox users deferred to slice 4 |
 
 ## B. Conflicts to keep visible (do not silently merge)
 
@@ -47,6 +52,9 @@ Created 18 Oct 2026 at handoff install. Status values: OPEN · PROPOSED (Claude)
 4. Who is the product owner and technical lead on the iThink side (you, your son, a dev team)?
 5. ~~Preferred build approach~~ — ANSWERED 18 Oct 2026: iThink standard SaaS stack (see section D).
 6. Any CDA/BIR/AMLA report formats or worked financial examples (loan amortization, dividend/patronage) from a real coop to use as acceptance tests?
+7. (Slice 1 finding) `docs/worked_examples/starter.json`: `loan_interest_advance`, `release_deductions` and `savings_interest_min_monthly` have only a normal example, but the activation gate needs normal, boundary and exception; and several vector inputs are free text (for example the savings balances and the remittance expected lines) that no calculation can read. Both are fixed in slice 2 together with docs/05, which needs Jun's review of the added examples.
+8. (Slice 1 finding) No slice in docs/11 covers savings products, deposits and withdrawals, yet slice 6 needs withdrawals (AT-14's real consumer) and slice 9 tests the savings interest run (AT-09). Add savings to slice 6 or make it its own slice?
+9. (Slice 1 actions for Jun) Set the `FORBIDDEN_TERMS` Actions secret (D26); turn on GitHub secret scanning and push protection; confirm the CODEOWNERS handle (currently the account the build session ran under); after the first green CI run, turn on branch protection with the five checks (D22).
 
 ## D. iThink standard SaaS stack (DECIDED by Jun, 18 Oct 2026)
 
@@ -58,7 +66,7 @@ iCOOPs follows the same stack and DevOps pattern as iLogistics, Malasakit, GAD a
 - Database/auth/storage: Supabase PostgreSQL (org iThink Technologies)
 - App: Next.js + React; JSON APIs; Python where necessary (e.g., batch jobs, computations, reports)
 
-Status: build NOT started. Next step = revisit iCOOPs design / BPR / SRS / FS in a separate session before any repo, Supabase project or Vercel project is created.
+Status (24 Oct 2026): development runs in Claude Code (D21). Slice 1 (skeleton) is built and awaiting review, see docs/12. No Supabase or Vercel project exists yet (D24).
 
 ## E. Partner segments (DECIDED by Jun, 23 Oct 2026, part of D14)
 

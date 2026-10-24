@@ -1,0 +1,16 @@
+node_modules
+.next
+dist
+coverage
+pnpm-lock.yaml
+# design documents and the prototype are not reformatted by tooling
+docs
+demo
+*.md
+# SQL is reviewed as written; migrations are immutable once merged
+*.sql
+supabase/migrations
+supabase/tests
+supabase/seed.sql
+# deliberate violations used to prove the guards still work
+scripts/fixtures

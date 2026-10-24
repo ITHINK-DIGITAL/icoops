@@ -1,0 +1,25 @@
+# dependencies and build output
+node_modules/
+.next/
+.turbo/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# secrets and local environment: never commit (CLAUDE.md)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Supabase local state
+supabase/.branches/
+supabase/.temp/
+
+# editor and tool state
+.DS_Store
+.vscode/
+.idea/
+.anchor/

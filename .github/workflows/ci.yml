@@ -1,0 +1,133 @@
+name: CI
+
+# Required checks for branch protection on main (D22): static, unit, vectors, build, db.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    name: static
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Format
+        run: pnpm format:check
+      - name: Lint (includes the calc literal guard and its self-test)
+        run: pnpm lint
+      - name: Type check
+        run: pnpm typecheck
+      - name: Calc names guard (text check and self-test)
+        run: |
+          node scripts/check-calc-literals.mjs --self-test
+          pnpm check:calc
+      - name: Secrets, contact details and partner names
+        env:
+          # Real partner and employer names cannot live in a public repo: they are an Actions
+          # secret, one per line. Empty on pull requests from forks. Required on pushes to main.
+          FORBIDDEN_TERMS: ${{ secrets.FORBIDDEN_TERMS }}
+          FORBIDDEN_TERMS_REQUIRED: ${{ github.event_name == 'push' && '1' || '0' }}
+        run: |
+          node scripts/check-forbidden-terms.mjs --self-test
+          pnpm check:forbidden
+      - name: Dependency audit (production, high and above)
+        run: pnpm audit --prod --audit-level high
+
+  unit:
+    name: unit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
+  vectors:
+    name: vectors
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Slice 1: validates starter.json and reports vectors as pending (no calculations yet).
+      # From slice 2, set VECTORS_STRICT=1 so that a pending or failing vector fails the build.
+      - run: pnpm test:vectors
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build the staff app
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+          # Placeholders only: the build needs no secrets.
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: build-placeholder
+        run: pnpm --filter @icoops/web build
+
+  db:
+    name: db
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.122.0
+      - name: Start the local Supabase stack
+        run: supabase start
+      - name: Reset the database (all migrations, then the synthetic seed)
+        run: supabase db reset
+      - name: Lint database functions
+        run: supabase db lint --schema public,private --level warning --fail-on error
+      - name: Install the pgTAP runner
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libtap-parser-sourcehandler-pgtap-perl
+      - name: Database tests (catalog, AT-13 isolation matrix, AT-14 maker-checker, audit, rule gate)
+        run: scripts/db-test.sh "postgresql://postgres:postgres@127.0.0.1:54322/postgres"
+      - name: API tests (AT-13 and AT-14 through PostgREST with real user tokens)
+        run: |
+          eval "$(supabase status -o env | sed 's/^/export /')"
+          echo "::add-mask::$SERVICE_ROLE_KEY"
+          export SUPABASE_URL="$API_URL" SUPABASE_ANON_KEY="$ANON_KEY" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY"
+          pnpm test:isolation

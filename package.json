@@ -1,0 +1,32 @@
+{
+  "name": "icoops",
+  "private": true,
+  "version": "0.0.0",
+  "description": "iCOOPs monorepo: multi-tenant SaaS for Philippine cooperatives",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:forbidden": "node scripts/check-forbidden-terms.mjs",
+    "check:calc": "node scripts/check-calc-literals.mjs",
+    "test:vectors": "pnpm --filter @icoops/vectors run test:vectors",
+    "test:isolation": "pnpm --filter @icoops/isolation-tests run test:api"
+  },
+  "devDependencies": {
+    "prettier": "3.9.10",
+    "turbo": "2.11.10",
+    "typescript": "5.9.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": ">=8.5.23"
+    }
+  }
+}
