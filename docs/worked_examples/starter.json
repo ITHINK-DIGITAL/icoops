@@ -443,7 +443,8 @@
     "excess": "0"
    },
    "note": "",
-   "segment": "S2"
+   "segment": "ALL",
+   "requires_flag": "payroll_deduction"
   },
   {
    "id": "PD-REM-02",
@@ -462,7 +463,8 @@
     "excess": "0"
    },
    "note": "",
-   "segment": "S2"
+   "segment": "ALL",
+   "requires_flag": "payroll_deduction"
   },
   {
    "id": "PD-REM-03",
@@ -480,7 +482,8 @@
     "excess": "0"
    },
    "note": "",
-   "segment": "S2"
+   "segment": "ALL",
+   "requires_flag": "payroll_deduction"
   },
   {
    "id": "PD-REM-04",
@@ -498,7 +501,8 @@
     "excess": "150"
    },
    "note": "",
-   "segment": "S2"
+   "segment": "ALL",
+   "requires_flag": "payroll_deduction"
   },
   {
    "id": "PD-NTHP-01",

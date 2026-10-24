@@ -16,7 +16,7 @@ Every tenant has a segment that sets its default profile pack and flags; no code
 
 | Segment | Payroll deduction flag | Tenant shape | R1 status |
 |---|---|---|---|
-| S1 Private | OFF (may be switched ON per tenant) | One tenant per co-op | Built in R1 (PARTNER-S1) |
+| S1 Private | OFF by default; ON for the first tenant (D19) | One tenant per co-op | Built in R1 (standard S1 profile), with thin payroll slice |
 | S2 LGU / government | ON | One tenant, several payroll offices | Payroll deduction released in R2 |
 | S3 Federation | Per member co-op | Parent tenant plus child tenants (tenant.parent_tenant_id) | Schema in R1, features in R3 |
 
@@ -182,7 +182,7 @@ Screens: Loan calculator · Application · Eligibility result · Evaluation · A
 
 ## Payroll deduction
 
-**Release R2 (segment S2).** Built behind the `payroll_deduction` flag, which is OFF for S1 tenants; this section is retained as the design for the S2 release.
+**Release: thin slice in R1, full in R2 (D19).** Built behind the `payroll_deduction` flag. R1 covers one payroll office and one configurable file format: deduction schedule, monthly file with change list, remittance import and matching passes 1 to 4, partial, zero-pay and excess handling, allocation by the tenant order, shortfall carry-forward, and reconciliation. R2 adds several offices and formats, take-home-pay checks (AT-04), service fees and the unremitted aging report.
 
 One deduction batch per payroll office per month carries the whole cycle: build, approve, send, receive, match, allocate, post.
 
@@ -295,9 +295,9 @@ R1 ships 20 standard outputs; every one filters by branch/unit, payroll office a
 | 6   | Loan releases register                                           | GM, Board                   | Daily / monthly |
 | 7   | Loan portfolio and aging by product, unit, payroll office        | GM, Board, credit committee | Monthly         |
 | 8   | Past-due list with co-makers                                     | Collections, GM             | Weekly          |
-| 9   | Deduction batch and change list (S2)                                  | Collections                 | Monthly         |
-| 10  | Remittance reconciliation by payroll office (S2)                      | Collections, Accountant     | Monthly         |
-| 11  | Unremitted deductions aging (S2)                                      | Collections, GM             | Monthly         |
+| 9   | Deduction batch and change list (payroll flag)                                  | Collections                 | Monthly         |
+| 10  | Remittance reconciliation by payroll office (payroll flag)                      | Collections, Accountant     | Monthly         |
+| 11  | Unremitted deductions aging (R2)                                      | Collections, GM             | Monthly         |
 | 12  | Teller blotter and cash position                                 | Head teller                 | Daily           |
 | 13  | OR register (issued and cancelled)                               | Accountant, auditor         | Daily           |
 | 14  | Daily transaction journal                                        | Accountant, auditor         | Daily           |
@@ -318,8 +318,8 @@ R1 is accepted when these scenarios pass at the design partner on synthetic or a
 | AT-02 | Duplicate applicant (same name, birthdate, ID)                                              | Flagged; cannot be approved without override reason                                       | MB-003                     |
 | AT-03 | Release a diminishing-balance loan with fee, insurance, CBU retention and prior-loan payoff | Schedule and net proceeds equal the owner's worked example to the centavo; GL balanced    | LN-007, AC-002             |
 | AT-04 (S2, R2) | Loan that breaches the take-home-pay floor                                                  | Blocked or warned per configuration; override needs GM approval                           | LN-004, PD-004             |
-| AT-05 (S2, R2) | Monthly deduction file for one payroll office                                               | Totals equal the sum of active deduction items; change list correct vs prior month        | PD-003                     |
-| AT-06 (S2, R2) | Remittance with partial, zero-pay, unknown and excess lines                                 | Each classified correctly; partials allocated in order; shortfalls listed                 | PD-005–008                 |
+| AT-05 (R1 thin, flag ON) | Monthly deduction file for one payroll office                                               | Totals equal the sum of active deduction items; change list correct vs prior month        | PD-003                     |
+| AT-06 (R1 thin, flag ON) | Remittance with partial, zero-pay, unknown and excess lines                                 | Each classified correctly; partials allocated in order; shortfalls listed                 | PD-005–008                 |
 | AT-07 | Teller receipt split across loan, CBU and savings, then EOD with a shortage                 | One OR; three postings; shortage to suspense; day locks after approval                    | TL-002, TL-004, TL-005     |
 | AT-08 | Reverse a posted payment after day lock                                                     | Requires manager override with reason; original and reversal both visible                 | TL-006, PL-022             |
 | AT-09 | Savings interest run for a month                                                            | ADB, gross interest and withholding equal the worked example                              | SV-003                     |

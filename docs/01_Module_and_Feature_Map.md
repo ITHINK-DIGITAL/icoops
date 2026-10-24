@@ -14,7 +14,7 @@ Channels sit on cooperative operations, which sit on a shared platform; a new co
 
 ## Module summary
 
-Fifteen of the 21 modules start in R1, some of them in basic form; the rest wait until the design partner is live. R1 is cut for segment S1 (private co-ops, payroll deduction off); payroll deduction is released in R2 for segment S2 and federation features in R3.
+Fifteen of the 21 modules start in R1, some of them in basic form; the rest wait until the design partner is live. R1 is cut for segment S1 (private co-ops) with a thin payroll-deduction slice for one office, because the first tenant collects through payroll (D19); the full multi-office payroll release follows in R2 for segment S2 and federation features in R3.
 
 | \#  | Module                            | Purpose                                                                          | Release                    | Edition               |
 |-----|-----------------------------------|----------------------------------------------------------------------------------|----------------------------|-----------------------|
@@ -28,7 +28,7 @@ Fifteen of the 21 modules start in R1, some of them in basic form; the rest wait
 | 2   | Share Capital and CBU             | Subscriptions, paid-up capital, CBU plans, withdrawals, transfers                | R1                         | Core                  |
 | 3   | Savings and Deposits              | Savings, time deposits, interest, holds, statements                              | R1                         | Core                  |
 | 4   | Loans                             | Origination to closure: eligibility, approval, release, amortization, collection | R1                         | Core                  |
-| 5   | Payroll Deduction and Collections | Deduction files per payroll office, remittance matching, shortfalls, allocation  | R1 direct-pay basic · R2 payroll deduction (S2) | Core — differentiator |
+| 5   | Payroll Deduction and Collections | Deduction files per payroll office, remittance matching, shortfalls, allocation  | R1 direct-pay + thin payroll deduction (one office) · R2 full payroll deduction (S2) | Core — differentiator |
 | 6   | Teller and Cashiering             | OR issuance, cash/cheque posting, cash count, end-of-day                         | R1                         | Core                  |
 | 7   | Dividends and Patronage Refund    | Year-end computation, simulation, approval, allocation                           | R2                         | Core                  |
 | 8   | Mutual Benefits and Claims        | Damayan, death, hospitalization, calamity benefits; insurer claims               | R2                         | Core                  |

@@ -4,7 +4,7 @@ The SRS states what iCOOPs shall do, module by module; each requirement has an I
 
 ## Purpose, scope and conventions
 
-**Segment note (D14, 23 Oct 2026):** R1 is cut for segment S1 (private cooperatives, payroll deduction normally OFF), with PARTNER-S1 as the design partner. Payroll deduction is built behind a per-tenant flag and released in R2 for segment S2 (LGU/government). Federation (S3) features follow in R3; its tenant hierarchy is designed into the R1 schema.
+**Segment note (D14, D19):** R1 is cut for segment S1 (private cooperatives), built to the standard S1 profile. Payroll deduction sits behind a per-tenant flag. Because the first tenant collects through its employer's payroll, R1 includes a thin payroll-deduction slice for one payroll office and one file format (D19); the full multi-office release, take-home-pay checks and service fees follow in R2 for segment S2 (LGU/government). Federation (S3) features follow in R3; its tenant hierarchy is designed into the R1 schema.
 
 This SRS covers all 21 modules of iCOOPs across releases R1–R3; the Functional Spec tab details only R1.
 
@@ -100,7 +100,7 @@ Savings and loans carry most of the money; every computation here must match own
 | LN-006 | The system shall route approval by the tenant's amount matrix and record committee decisions with reasons. | Must | R1 |
 | LN-007 | The system shall compute the amortization schedule and release deductions (fees, insurance, documentary stamp tax, CBU, prior-loan payoff). | Must | R1 |
 | LN-008 | The system shall release by cash, check, bank transfer or e-wallet, generating a disbursement voucher. | Must | R1 |
-| LN-009 | The system shall add amortizations to the member's deduction schedule on release, when payroll deduction is enabled for the tenant. | Must | R2 |
+| LN-009 | The system shall add amortizations to the member's deduction schedule on release, when payroll deduction is enabled for the tenant. | Must | R1 (thin) · R2 (full) |
 | LN-010 | The system shall allocate payments in the configured order (default penalty, interest, principal) and handle advance and partial payments. | Must | R1 |
 | LN-011 | The system shall compute penalties on past-due amounts per product rule and grace period. | Must | R1 |
 | LN-012 | The system shall support renewal, top-up and restructuring with configured minimum-paid rules. | Must | R1 |
@@ -118,15 +118,15 @@ These requirements implement processes P3 and P4, the daily and monthly cash cyc
 
 | ID | Requirement | Priority | Release |
 |---|---|---|---|
-| PD-001 | The system shall register payroll offices with file format, cut-off date, remittance account and service-fee rule. | Must | R2 |
-| PD-002 | The system shall keep a deduction schedule per member and item (CBU, savings, loan amortization, benefit dues) with start and stop dates. | Must | R2 |
-| PD-003 | The system shall generate the monthly deduction file per payroll office, plus change lists of new, stopped and amended deductions. | Must | R2 |
+| PD-001 | The system shall register payroll offices with file format, cut-off date, remittance account and service-fee rule. | Must | R1 (thin) · R2 (full) |
+| PD-002 | The system shall keep a deduction schedule per member and item (CBU, savings, loan amortization, benefit dues) with start and stop dates. | Must | R1 (thin) · R2 (full) |
+| PD-003 | The system shall generate the monthly deduction file per payroll office, plus change lists of new, stopped and amended deductions. | Must | R1 (thin) · R2 (full) |
 | PD-004 | The system shall flag members whose total deductions would breach the net take-home-pay floor before the file is approved. | Must | R2 |
-| PD-005 | The system shall import remittance files and auto-match lines by member identifier and deduction item. | Must | R2 |
-| PD-006 | The system shall classify each line as matched, partial, zero-pay, unknown member or excess, and queue exceptions for review. | Must | R2 |
-| PD-007 | The system shall allocate short remittances by the tenant's allocation order. | Must | R2 |
-| PD-008 | The system shall carry forward or bill shortfalls and notify affected members. | Must | R2 |
-| PD-009 | The system shall reconcile expected vs received by payroll office and month, and age unremitted amounts. | Must | R2 |
+| PD-005 | The system shall import remittance files and auto-match lines by member identifier and deduction item. | Must | R1 (thin) · R2 (full) |
+| PD-006 | The system shall classify each line as matched, partial, zero-pay, unknown member or excess, and queue exceptions for review. | Must | R1 (thin) · R2 (full) |
+| PD-007 | The system shall allocate short remittances by the tenant's allocation order. | Must | R1 (thin) · R2 (full) |
+| PD-008 | The system shall carry forward or bill shortfalls and notify affected members. | Must | R1 (thin) · R2 (full) |
+| PD-009 | The system shall reconcile expected vs received by payroll office and month, and age unremitted amounts. | Must | R1 (thin) · R2 (full) |
 | PD-010 | The system shall compute and post payroll office service fees deducted from remittances. | Should | R2 |
 | PD-011 | The system shall support field collectors with routes and receipts for direct-pay members. | Could | R3 |
 | PD-012 | The system shall record member direct payments (teller, bank deposit slip or transfer reference) and match them to the member's dues. | Must | R1 |
@@ -244,7 +244,7 @@ R1 integrates by file, which every payroll office and regulator already accepts;
 
 | Interface | Direction | Method | Release |
 |---|---|---|---|
-| Payroll offices (DepEd APDS, PNP, LGU, company HR) | Out: deduction file · In: remittance report | Files in each office's format | R2 |
+| Payroll offices (DepEd APDS, PNP, LGU, company HR) | Out: deduction file · In: remittance report | Files in each office's format | R1 (one office) · R2 (all) |
 | Banks | In: statement for reconciliation | CSV/Excel upload | R1 |
 | CIC (credit information) | Out: credit data submission | File per CIC specification | R1 |
 | SMS and email providers | Out: notifications | API | R1 |

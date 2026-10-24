@@ -3,7 +3,7 @@
 Read this first in every session. The repo is the handoff: everything needed to continue is here or linked from here.
 
 ## What this is
-iCOOPs: greenfield multi-tenant SaaS for Philippine cooperatives (iThink Digital). Segment S1 (private co-ops, payroll deduction OFF) first, built to the standard S1 profile in docs/10 (label PARTNER-S1; no design partner is signed, D18); payroll deduction (S2, government) in R2; federation (S3) in R3. One codebase, all tenants on the shared multi-tenant platform (D14, D15). Product owner: Jun Mercader.
+iCOOPs: greenfield multi-tenant SaaS for Philippine cooperatives (iThink Digital). Segment S1 (private co-ops, payroll deduction OFF) first, built to the standard S1 profile in docs/10 (label PARTNER-S1; no design partner is signed, D18); the first tenant collects through payroll, so a thin single-office payroll slice is in R1 (D19); full multi-office payroll deduction (S2, government) in R2; federation (S3) in R3. One codebase, all tenants on the shared multi-tenant platform (D14, D15). Product owner: Jun Mercader.
 
 ## Status (23 Oct 2026)
 Design phase. **No app code, Supabase project or Vercel project exists yet.** Do not scaffold until Jun confirms the design review is done (see "Gate" below).

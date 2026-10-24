@@ -43,7 +43,7 @@ Items 1 to 3 gate the loan and savings engines. They do not gate the tenant, aut
 
 | Risk | Mitigation |
 |---|---|
-| Financial rules never validated by a real co-op before first customer | Independent accountant recomputes every vector (docs/05 approval table); one hour of review by a practising co-op treasurer from Jun's network |
+| Financial rules never validated by a real co-op before first customer | Independent accountant recomputes every vector (docs/05 approval table); one hour of review by a practising co-op treasurer. Reviewers are identified by role (Treasurer-1, Accountant-1, Tax-Adviser-1; D20), not by name |
 | Standard differs from how a real co-op works | All values are parameters; first customer's three ledgers become vectors in week one of onboarding |
 | Regulatory misreads (tax, CDA, lending disclosure) | Mark every such value CONFIRM; tax and CDA positions confirmed by an adviser before the first go-live |
 | No parallel-run partner for acceptance | Keep the one-month parallel run as a condition of the first customer contract |

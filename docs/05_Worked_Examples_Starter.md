@@ -19,7 +19,7 @@ C1 to C8 are default values of configurable parameters, not fixed rules. Each te
 | C7 | Short remittance allocation order: loan, then CBU, then savings (benefit dues sit between loan and CBU when present) | PD-007 |
 | C8 | Take-home-pay check passes when take-home after the new amortization is greater than or equal to the floor | LN-004, PD-004 |
 
-Segment applicability: sections 7 (remittance allocation) and 8 (take-home-pay floor) belong to the S2 release (payroll deduction on). Sections 1 to 6 apply to S1 in R1.
+Applicability: section 7 (remittance allocation) is in the R1 thin payroll slice and runs for tenants with the payroll_deduction flag ON (D19). Section 8 (take-home-pay floor) stays in R2. Sections 1 to 6 apply to every tenant in R1.
 
 C3, C4 and C5 are business rules, not math; a different choice produces different centavos. Recommended defaults adopted by Jun on 23 Oct 2026 (D17, docs/09). PARTNER-S1's real ledgers will confirm or change the parameter values.
 

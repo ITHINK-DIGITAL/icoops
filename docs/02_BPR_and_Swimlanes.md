@@ -49,7 +49,7 @@ Fourteen actors take part in the to-be processes; roles map to permission sets i
 
 ## BPR summary
 
-Segment applicability: P3 (payroll deduction cycle) applies to segment S2 and is released in R2. For segment S1, monthly collection runs through P4 (teller and direct payments) plus loan follow-up.
+Segment applicability: P3 (payroll deduction cycle) runs in R1 as a thin slice (one payroll office, one file format) for tenants with the payroll_deduction flag ON, such as the first tenant (D19); the full multi-office version is the R2 release for segment S2. Tenants without payroll deduction collect through P4 (teller and direct payments) plus loan follow-up.
 
 Across all seven processes the redesign removes re-keying and spreadsheet reconciliation; targets are proposals to baseline with the design partner.
 
