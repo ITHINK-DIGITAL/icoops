@@ -1,0 +1,29 @@
+{
+  "name": "@icoops/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Typed Supabase client factories and wrappers for the guarded database functions",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "admin:create-tenant": "tsx scripts/create-tenant.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.118.0",
+    "@icoops/rules": "workspace:*"
+  },
+  "devDependencies": {
+    "@icoops/config": "workspace:*",
+    "eslint": "9.39.5",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "3.2.7",
+    "tsx": "4.23.15",
+    "@types/node": "22.20.5"
+  }
+}

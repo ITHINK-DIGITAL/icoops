@@ -1,0 +1,6 @@
+# Review ownership. Invariant constants, migrations and the decision log need the product owner.
+# Handle confirmed only as the account this session runs under; Jun to confirm or replace.
+* @iThinkDigital001
+/packages/calc/src/invariants.ts @iThinkDigital001
+/supabase/migrations/ @iThinkDigital001
+/docs/07_Decision_Log_and_Open_Questions.md @iThinkDigital001

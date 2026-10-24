@@ -2,7 +2,7 @@
 
 Multi-tenant cooperative management SaaS for Philippine cooperatives, by iThink Digital Technology Solutions.
 
-**Status:** design phase (docs v0.1 draft). No application code yet.
+**Status:** slice 1 (skeleton) built and awaiting review: tenants, roles, row-level security, audit log, maker-checker and rule versions with the activation gate, plus a staff app shell and CI. Calculation libraries start in slice 2. Docs are v0.1 drafts. See [docs/12](docs/12_Slice1_Skeleton.md).
 
 ## Stack (decided 18 Oct 2026)
 
@@ -24,10 +24,16 @@ Multi-tenant cooperative management SaaS for Philippine cooperatives, by iThink 
 | [docs/10_S1_Reference_Profile.md](docs/10_S1_Reference_Profile.md) | Expert reference answers for the S1 open items (illustrative parameters, not partner facts) |
 | [docs/09_PARTNER-S1_Input_Request.md](docs/09_PARTNER-S1_Input_Request.md) | Adopted conventions C3 to C5, working assumptions and input request for the design partner |
 | [docs/07_Decision_Log_and_Open_Questions.md](docs/07_Decision_Log_and_Open_Questions.md) | Decisions made and still open |
+| [docs/11_Claude_Code_Kickoff.md](docs/11_Claude_Code_Kickoff.md) | How development works in Claude Code: slices and working agreements |
+| [docs/12_Slice1_Skeleton.md](docs/12_Slice1_Skeleton.md) | Slice 1 reference: layout, schema, row-level security, maker-checker, CI, running locally |
 
 ## Demo
 
 [demo/r1-demo.html](demo/r1-demo.html) is a single-file R1 clickable prototype. It uses synthetic data only; thresholds, fees and limits shown are illustrative placeholders, not approved product rules. Open it in a browser.
+
+## Develop
+
+Node 22 and pnpm. `pnpm install`, then `pnpm lint`, `pnpm typecheck`, `pnpm test`. The database tests, the local stack and the API tests are described in [docs/12](docs/12_Slice1_Skeleton.md) section 6. Never commit secrets or `.env` files; the repository is public and CI checks for them.
 
 Working with Claude Code? Start with [CLAUDE.md](CLAUDE.md).
 

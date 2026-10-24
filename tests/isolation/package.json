@@ -1,0 +1,25 @@
+{
+  "name": "@icoops/isolation-tests",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "API-level tests (AT-13, AT-14) against the local Supabase stack with real user tokens",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test:api": "vitest run"
+  },
+  "dependencies": {
+    "@icoops/db": "workspace:*",
+    "@supabase/supabase-js": "2.118.0",
+    "otpauth": "9.5.2"
+  },
+  "devDependencies": {
+    "@icoops/config": "workspace:*",
+    "@types/node": "22.20.5",
+    "eslint": "9.39.5",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "3.2.7"
+  }
+}

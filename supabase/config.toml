@@ -1,0 +1,65 @@
+# Local Supabase stack for development and CI (supabase start / supabase db reset).
+# No hosted project exists yet; creating the dev project needs the owner's approval (docs/11).
+project_id = "icoops"
+
+[api]
+enabled = true
+port = 54321
+# Only public is exposed; the private schema holds helpers and is never reachable through the API.
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+# Services slice 1 does not use are off, which also keeps CI fast.
+[studio]
+enabled = false
+
+[realtime]
+enabled = false
+
+[storage]
+enabled = false
+
+[edge_runtime]
+enabled = false
+
+[analytics]
+enabled = false
+
+[inbucket]
+enabled = false
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+additional_redirect_urls = ["http://127.0.0.1:3000/**"]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+# Staff accounts are created through the platform path (docs/07 D25), never by self sign-up.
+enable_signup = false
+enable_anonymous_sign_ins = false
+minimum_password_length = 12
+
+# In the CLI, [auth.email] enable_signup switches the email provider on or off (false means
+# "Email logins are disabled" for everyone). Self sign-up is blocked by the top-level
+# enable_signup = false above; tests/isolation checks that it stays blocked.
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+
+# Approvals need a second factor (aal2), so TOTP must be available.
+[auth.mfa]
+max_enrolled_factors = 10
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true

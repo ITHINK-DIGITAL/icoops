@@ -1,0 +1,29 @@
+{
+  "name": "@icoops/vectors",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Loader, validator and runner for the shared worked-example vectors (docs/worked_examples/starter.json)",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:vectors": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@icoops/rules": "workspace:*",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@icoops/config": "workspace:*",
+    "@types/node": "22.20.5",
+    "eslint": "9.39.5",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "3.2.7"
+  }
+}
