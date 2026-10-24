@@ -6,12 +6,13 @@ Read this first in every session. The repo is the handoff: everything needed to 
 iCOOPs: greenfield multi-tenant SaaS for Philippine cooperatives (iThink Digital). Segment S1 (private co-ops, payroll deduction OFF) first, built to the standard S1 profile in docs/10 (label PARTNER-S1; no design partner is signed, D18); the first tenant collects through payroll, so a thin single-office payroll slice is in R1 (D19); full multi-office payroll deduction (S2, government) in R2; federation (S3) in R3. One codebase, all tenants on the shared multi-tenant platform (D14, D15). Product owner: Jun Mercader.
 
 ## Status (23 Oct 2026)
-Design phase. **No app code, Supabase project or Vercel project exists yet.** Do not scaffold until Jun confirms the design review is done (see "Gate" below).
+Design complete enough to build (24 Oct 2026). **No app code, Supabase project or Vercel project exists yet.** All development now happens in Claude Code (D21). Start with `docs/11_Claude_Code_Kickoff.md`: slice 1 (skeleton) first, and propose the schema for Jun's approval before writing migrations.
 
 ## Decided stack (docs/07, section D)
 Next.js + React (PWA) · Supabase PostgreSQL (RLS on `tenant_id`) · JSON APIs · Python only for batch/computation jobs · Vercel · GitHub org ITHINK-DIGITAL. Same pattern as iLogistics / Malasakit.
 
 ## Source of truth (read in this order)
+0. `docs/11_Claude_Code_Kickoff.md` — how to start building, slices, working agreements
 1. `docs/07_Decision_Log_and_Open_Questions.md` — what is decided vs open
    (also read `docs/08_Configurability_and_Library_Standard.md` before writing any calculation or rule code, and `docs/09_PARTNER-S1_Input_Request.md` for the adopted conventions and the partner input list)
 2. `docs/05_Worked_Examples_Starter.md` + `docs/worked_examples/starter.json` — synthetic engine test vectors (pending approval); load them in the rule tester
@@ -33,10 +34,10 @@ If documents conflict, the Decision Log wins, then FS, then SRS. Status of every
 - No stored-value wallet; payments go through licensed partners.
 
 ## Gate before building
-D2, D7, D11 and D12 are decided (23 Oct 2026); all PROPOSED items were accepted. The design partner is referred to as PARTNER-S1 only (never named in this public repo). Jun approved the standard S1 profile (docs/10), conventions C1 to C8 and the synthetic worked examples as owner on 23 Oct 2026 (D18), so the engine may implement those formulas as parameter defaults. Dividend, patronage refund and deduction-file examples are not yet approved: do not hard-code those. The first paying S1 customer validates the standard in a parallel run. Scaffolding still waits for Jun's explicit go.
+D2, D7, D11 and D12 are decided (23 Oct 2026); all PROPOSED items were accepted. The design partner is referred to as PARTNER-S1 only (never named in this public repo). Jun approved the standard S1 profile (docs/10), conventions C1 to C8 and the synthetic worked examples as owner on 23 Oct 2026 (D18), so the engine may implement those formulas as parameter defaults. Dividend, patronage refund and deduction-file examples are not yet approved: do not hard-code those. The first paying S1 customer validates the standard in a parallel run. Jun moved development to Claude Code on 24 Oct 2026 (D21), so slice 1 may start in the first Claude Code session; later slices follow the order in docs/11.
 
 ## Suggested first build slice (after gate)
-Tenant + auth + RLS skeleton → membership → loan product config + rule tester → loan release (amortisation, dues schedule) → teller/EOD and direct payments → loan follow-up and aging → GL posting → core reports. Payroll-deduction file and remittance matching come in R2 behind the `payroll_deduction` flag. Release tags: R1 MVP, R2 repeatable, R3 scale.
+Tenant + auth + RLS skeleton → membership → loan product config + rule tester → loan release (amortisation, dues schedule) → teller/EOD and direct payments → loan follow-up and aging → GL posting → core reports. A thin single-office payroll-deduction slice (file out, remittance in, matching, allocation, shortfalls) follows teller/EOD behind the `payroll_deduction` flag (D19); multi-office formats and take-home-pay checks are R2. Full slice list and acceptance tests are in docs/11. Release tags: R1 MVP, R2 repeatable, R3 scale.
 
 ## Where context lives outside the repo
 Private Claude Project "ITHINK iCoops" holds the original handoff brief, source inventory, 2023 module map, 2024 proposal reference and brochure draft. Commercial material (business case, pricing) is deliberately kept out of this public repo.
