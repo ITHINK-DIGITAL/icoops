@@ -145,8 +145,8 @@ Seed users sign in as `<role>.<a|b>@example.test` with the published development
 | pgTAP suite (197 checks: catalog, isolation matrix, maker-checker, audit, gate, tenants and roles) | Locally on Postgres 16 with the auth stub. The catalog test and the isolation matrix were also shown to fail when a table and a policy were deliberately broken |
 | `plpgsql_check` on all 21 plpgsql functions | Locally (the same check `supabase db lint` runs): no findings |
 | Lint, type check, unit tests (63), vectors, `next build`, production smoke run, audit | Locally, all passing |
-| API tests (`tests/isolation`), `supabase start`, `supabase db lint` itself | Not run locally (no Docker in the build environment). First run is the CI `db` job |
-| Behaviour of the migrations on the real Supabase image (roles, default privileges, `auth.jwt()` aal claim) | First run is the CI `db` job |
+| `supabase start`, `db reset` with the seed, `supabase db lint`, and all 197 pgTAP checks on the real Supabase image | CI `db` job, first run on the pull request: all passed |
+| API tests (`tests/isolation`) | Not runnable locally (no Docker in the build environment); CI `db` job. The first run failed on a configuration error (email provider disabled in `config.toml`), fixed in the next push |
 
 ## 9. Deviations from the approved proposal (D27)
 

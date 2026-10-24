@@ -49,8 +49,11 @@ enable_signup = false
 enable_anonymous_sign_ins = false
 minimum_password_length = 12
 
+# In the CLI, [auth.email] enable_signup switches the email provider on or off (false means
+# "Email logins are disabled" for everyone). Self sign-up is blocked by the top-level
+# enable_signup = false above; tests/isolation checks that it stays blocked.
 [auth.email]
-enable_signup = false
+enable_signup = true
 enable_confirmations = false
 
 # Approvals need a second factor (aal2), so TOTP must be available.

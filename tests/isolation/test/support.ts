@@ -45,9 +45,10 @@ export async function signIn(name: string, tenantKey: "a" | "b"): Promise<Supaba
   return client;
 }
 
-// A TOTP factor is enrolled once per user per run and its secret reused: enrolling again while a
-// verified factor exists is refused at aal1. Start from a fresh database (supabase db reset).
-const factors = new Map<string, { factorId: string; secret: string }>();
+// An aal2 session is created once per user per run and reused: a TOTP code can be replayed only
+// once per 30-second step, and enrolling a second factor while a verified one exists is refused at
+// aal1. Start from a fresh database (supabase db reset).
+const secondFactorSessions = new Map<string, SupabaseClient>();
 
 function totpCode(secret: string): string {
   return new OTPAuth.TOTP({
@@ -62,33 +63,33 @@ export async function signInWithSecondFactor(
   name: string,
   tenantKey: "a" | "b",
 ): Promise<SupabaseClient> {
-  const client = await signIn(name, tenantKey);
   const key = `${name}.${tenantKey}`;
-  let factor = factors.get(key);
-  if (!factor) {
-    const { data, error } = await client.auth.mfa.enroll({ factorType: "totp" });
-    if (error || !data) {
-      throw new Error(
-        `could not enrol a TOTP factor for ${key}: ${error?.message}. Reset the database and retry.`,
-      );
-    }
-    factor = { factorId: data.id, secret: data.totp.secret };
+  const cached = secondFactorSessions.get(key);
+  if (cached) {
+    return cached;
+  }
+  const client = await signIn(name, tenantKey);
+  const { data, error } = await client.auth.mfa.enroll({ factorType: "totp" });
+  if (error || !data) {
+    throw new Error(
+      `could not enrol a TOTP factor for ${key}: ${error?.message}. Reset the database and retry.`,
+    );
   }
   const { data: challenge, error: challengeError } = await client.auth.mfa.challenge({
-    factorId: factor.factorId,
+    factorId: data.id,
   });
   if (challengeError || !challenge) {
     throw new Error(`could not challenge the factor: ${challengeError?.message}`);
   }
   const { error: verifyError } = await client.auth.mfa.verify({
-    factorId: factor.factorId,
+    factorId: data.id,
     challengeId: challenge.id,
-    code: totpCode(factor.secret),
+    code: totpCode(data.totp.secret),
   });
   if (verifyError) {
     throw new Error(`second factor was not accepted: ${verifyError.message}`);
   }
-  factors.set(key, factor);
+  secondFactorSessions.set(key, client);
   return client;
 }
 

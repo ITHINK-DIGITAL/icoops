@@ -12,7 +12,7 @@ Not built yet: calculation formulas (`packages/calc` holds guardrails only, slic
 
 Next: Jun reviews and merges the slice 1 pull request. Before merging, Jun sets the `FORBIDDEN_TERMS` Actions secret (D26), confirms the CODEOWNERS handle and turns on secret scanning; after the first green CI run, branch protection with the five checks (docs/07 question 9). Then slice 2 (calculation libraries), which starts by fixing the vector gaps in docs/07 question 7. Slice 1 verification status, including what only CI can confirm, is in docs/12 section 8.
 
-Working notes: the database tests run locally without Docker (docs/12 section 6). The API tests and `supabase db lint` need the real stack and run in CI. Rules of the road are unchanged below.
+Working notes: the database tests run locally without Docker (docs/12 section 6). The API tests need the real Supabase stack and run in CI (`supabase db lint` and the pgTAP suite also pass there). Rules of the road are unchanged below.
 
 ## Decided stack (docs/07, section D)
 Next.js + React (PWA) · Supabase PostgreSQL (RLS on `tenant_id`) · JSON APIs · Python only for batch/computation jobs · Vercel · GitHub org ITHINK-DIGITAL. Same pattern as iLogistics / Malasakit.

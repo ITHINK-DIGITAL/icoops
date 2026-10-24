@@ -156,6 +156,17 @@ describe("writes", () => {
   });
 });
 
+describe("accounts", () => {
+  it("cannot be created by self sign-up: staff accounts come from the platform path (D25)", async () => {
+    const { data, error } = await anon().auth.signUp({
+      email: "self-signup@example.test",
+      password: "a-long-enough-test-password",
+    });
+    expect(error).not.toBeNull();
+    expect(data.user).toBeNull();
+  });
+});
+
 describe("guarded functions with tenant B's ids", () => {
   it("refuse every call", async () => {
     const accountantA = await signIn("accountant", "a");
