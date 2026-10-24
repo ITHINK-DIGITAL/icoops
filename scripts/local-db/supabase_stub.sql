@@ -31,8 +31,8 @@ create table auth.users (
   phone_change text not null,
   phone_change_token text not null,
   reauthentication_token text not null,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
+  created_at timestamptz not null,
+  updated_at timestamptz not null
 );
 create table auth.identities (
   id uuid primary key default gen_random_uuid(),
@@ -40,8 +40,10 @@ create table auth.identities (
   provider_id text not null,
   provider text not null,
   identity_data jsonb not null,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
+  -- No defaults and NOT NULL, like the real table as GoTrue reads it: a seed that omits them
+  -- must fail locally instead of only when someone signs in.
+  created_at timestamptz not null,
+  updated_at timestamptz not null
 );
 
 create function auth.uid() returns uuid language sql stable as $$

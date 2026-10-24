@@ -42,8 +42,8 @@ begin
       insert into auth.users
         (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at,
          raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
-         -- GoTrue reads these token columns as non-null strings: a NULL in any of them makes
-         -- sign-in fail with "Database error querying schema", so every one is set explicitly.
+         -- GoTrue maps these token columns to non-pointer strings; they are set explicitly as a
+         -- precaution (the failure actually seen in CI was identities.created_at, below).
          confirmation_token, recovery_token, email_change_token_new, email_change,
          email_change_token_current, phone_change, phone_change_token, reauthentication_token)
       values
@@ -51,9 +51,12 @@ begin
          v_email, extensions.crypt(c_password, extensions.gen_salt('bf')), now(),
          '{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb, now(), now(),
          '', '', '', '', '', '', '', '');
-      insert into auth.identities (user_id, provider_id, provider, identity_data)
+      -- created_at and updated_at have no default on the real table and GoTrue reads them into
+      -- non-nullable times: leaving them out makes every sign-in fail with
+      -- "Database error querying schema" (confirmed from the auth container log in CI).
+      insert into auth.identities (user_id, provider_id, provider, identity_data, created_at, updated_at)
       values (v_auth_id, v_auth_id::text, 'email',
-              jsonb_build_object('sub', v_auth_id::text, 'email', v_email));
+              jsonb_build_object('sub', v_auth_id::text, 'email', v_email), now(), now());
       perform public.admin_bootstrap_user(
         v_tenant_id, v_auth_id, (v_user ->> 1) || ' (' || upper(v_tenant ->> 'key') || ')', v_email,
         array[v_user ->> 2]);

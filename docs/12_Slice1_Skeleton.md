@@ -146,7 +146,7 @@ Seed users sign in as `<role>.<a|b>@example.test` with the published development
 | `plpgsql_check` on all 21 plpgsql functions | Locally (the same check `supabase db lint` runs): no findings |
 | Lint, type check, unit tests (63), vectors, `next build`, production smoke run, audit | Locally, all passing |
 | `supabase start`, `db reset` with the seed, `supabase db lint`, and all 197 pgTAP checks on the real Supabase image | CI `db` job, first run on the pull request: all passed |
-| API tests (`tests/isolation`) | Not runnable locally (no Docker in the build environment); CI `db` job. The first runs failed on two setup errors that only the real GoTrue could show: the email provider disabled in `config.toml`, and seeded `auth.users` rows leaving token columns NULL (GoTrue then fails sign-in with "Database error querying schema"). Both fixed; the local stub now enforces the non-null token columns |
+| API tests (`tests/isolation`) | Not runnable locally (no Docker in the build environment); CI `db` job. The first runs failed on two setup errors that only the real GoTrue could show: the email provider disabled in `config.toml`, and seeded `auth.identities` rows leaving `created_at` and `updated_at` NULL (GoTrue reads them into non-nullable times and sign-in fails with "Database error querying schema"; found from the auth container log). Both fixed; the local stub now requires those columns, so a seed that omits them fails locally |
 
 ## 9. Deviations from the approved proposal (D27)
 
